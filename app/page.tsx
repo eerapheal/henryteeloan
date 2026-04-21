@@ -6,8 +6,10 @@ import { Card } from '@/components/ui/card';
 import { CheckCircle, ArrowRight, Star, Phone } from 'lucide-react';
 import Header from '@/components/header';
 import Footer from '@/components/footer';
+import { useSettings } from '@/components/settings-provider';
 
 export default function Home() {
+  const settings = useSettings();
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <Header />
@@ -157,7 +159,7 @@ export default function Home() {
               </div>
               <h3 className="text-2xl font-bold text-foreground mb-4">Personal Loans</h3>
               <p className="text-muted-foreground mb-6 leading-relaxed">Quick and simple personal funding for any need. No business details required, just fast approval and simple terms for all Nigerians.</p>
-              <Link href="/products/personal-loan">
+              <Link href="/apply">
                 <Button className="w-full bg-primary hover:bg-primary/90 text-white font-bold h-12 rounded-xl transition-all shadow-lg shadow-primary/10">Apply Now</Button>
               </Link>
             </Card>
@@ -169,7 +171,7 @@ export default function Home() {
               </div>
               <h3 className="text-2xl font-bold text-foreground mb-4">Salary Advance</h3>
               <p className="text-muted-foreground mb-6 leading-relaxed">Get cash before your next payday. Automated deduction from your next paycheck makes repayment effortless and stress-free.</p>
-              <Link href="/products/personal-loan">
+              <Link href="/apply">
                 <Button className="w-full bg-primary hover:bg-primary/90 text-white font-bold h-12 rounded-xl transition-all shadow-lg shadow-primary/10">Get Advance</Button>
               </Link>
             </Card>
@@ -181,7 +183,7 @@ export default function Home() {
               </div>
               <h3 className="text-2xl font-bold text-foreground mb-4">Emergency Loans</h3>
               <p className="text-muted-foreground mb-6 leading-relaxed">Life happens fast. Get lightning-fast funding for medical emergencies, urgent repairs, or any unexpected financial need.</p>
-              <Link href="/products/personal-loan">
+              <Link href="/apply">
                 <Button className="w-full bg-primary hover:bg-primary/90 text-white font-bold h-12 rounded-xl transition-all shadow-lg shadow-primary/10">Request Funds</Button>
               </Link>
             </Card>
@@ -329,16 +331,16 @@ export default function Home() {
                   <Button size="lg" className="bg-accent hover:bg-accent/90 text-primary font-bold shadow-lg shadow-accent/20 transition-all hover:scale-105 duration-200">Apply Now</Button>
                 </Link>
                 <div className="flex flex-col gap-2">
-                  <a href="tel:+2348034783848">
+                  <a href={`tel:${settings.supportPhone1.replace(/\s+/g, '')}`}>
                     <Button size="lg" variant="outline" className="w-full border-accent/20 text-white bg-white/5 hover:bg-white/10 font-medium backdrop-blur-sm transition-all hover:border-accent/40">
                       <Phone className="mr-2 w-4 h-4 text-accent" />
-                      08034783848
+                      {settings.supportPhone1}
                     </Button>
                   </a>
-                  <a href="tel:+2347025251073">
+                  <a href={`tel:${settings.supportPhone2.replace(/\s+/g, '')}`}>
                     <Button size="lg" variant="outline" className="w-full border-accent/20 text-white bg-white/5 hover:bg-white/10 font-medium backdrop-blur-sm transition-all hover:border-accent/40">
                       <Phone className="mr-2 w-4 h-4 text-accent" />
-                      07025251073
+                      {settings.supportPhone2}
                     </Button>
                   </a>
                 </div>

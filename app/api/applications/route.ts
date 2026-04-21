@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import clientPromise from '@/lib/mongodb';
 import { sendAdminNotification, sendApplicantConfirmation, sendGuarantorNotification } from '@/lib/email';
 import { generateLoanAgreementPDF } from '@/lib/pdf';
+import { getSettings } from '@/lib/settings';
 
 export async function POST(request: NextRequest) {
   try {
@@ -48,7 +49,7 @@ export async function POST(request: NextRequest) {
       loanAmount: parseFloat(body.loanAmount),
       previousLoan: parseFloat(body.previousLoan || '0'),
       totalLoan: parseFloat(body.totalLoan),
-      interestRate: body.interestRate || '20%',
+      interestRate: body.interestRate || `${(await getSettings()).interestRate}%`,
       
       // Personal Details
       fullName: body.fullName,

@@ -1,4 +1,5 @@
 import nodemailer from 'nodemailer';
+import { getSettings } from '@/lib/settings';
 
 // Create a transporter using your email service
 const transporter = nodemailer.createTransport({
@@ -33,7 +34,8 @@ interface ApplicationData {
 }
 
 export async function sendAdminNotification(data: ApplicationData) {
-  const adminEmail = process.env.ADMIN_EMAIL || 'support@henryteeloans.com';
+  const settings = await getSettings();
+  const adminEmail = settings.adminEmail;
 
   // Prepare attachments if NIN image is provided
   const attachments: any[] = [];
@@ -151,6 +153,7 @@ export async function sendAdminNotification(data: ApplicationData) {
 }
 
 export async function sendApplicantConfirmation(data: ApplicationData, pdfBuffer?: ArrayBuffer) {
+  const settings = await getSettings();
   const attachments: any[] = [];
   
   if (pdfBuffer) {
@@ -234,6 +237,7 @@ export async function sendApplicantConfirmation(data: ApplicationData, pdfBuffer
 }
 
 export async function sendGuarantorNotification(data: ApplicationData) {
+  const settings = await getSettings();
   const emailContent = `
     <!DOCTYPE html>
     <html>
@@ -266,10 +270,10 @@ export async function sendGuarantorNotification(data: ApplicationData) {
           
           <div style="margin: 25px 0; text-align: center;">
             <p style="font-size: 18px; font-weight: 700; color: #006633; margin: 10px 0;">
-              📞 08034783848
+              📞 ${settings.supportPhone1}
             </p>
             <p style="font-size: 18px; font-weight: 700; color: #006633; margin: 10px 0;">
-              📞 07025251073
+              📞 ${settings.supportPhone2}
             </p>
           </div>
           

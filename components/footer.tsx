@@ -1,8 +1,10 @@
 import Link from 'next/link';
 import { Phone, Mail, MapPin } from 'lucide-react';
 import Image from 'next/image';
+import { useSettings } from '@/components/settings-provider';
 
 export default function Footer() {
+  const settings = useSettings();
   return (
     <footer className="bg-primary text-slate-300 py-16 border-t border-accent/20">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -35,10 +37,10 @@ export default function Footer() {
           <div className="animate-fadeInUp" style={{ animationDelay: '0.2s' }}>
             <h4 className="font-semibold text-white mb-6 uppercase tracking-wider text-sm">Company</h4>
             <ul className="space-y-3 text-sm text-slate-400">
-              <li><a href="#" className="hover:text-accent transition-colors duration-200">About Us</a></li>
-              <li><a href="#" className="hover:text-accent transition-colors duration-200">Blog</a></li>
+              <li><Link href="/how-it-works" className="hover:text-accent transition-colors duration-200">About Us</Link></li>
+              <li><Link href="/apply" className="hover:text-accent transition-colors duration-200">Apply Now</Link></li>
               <li><Link href="/how-it-works" className="hover:text-accent transition-colors duration-200">How It Works</Link></li>
-              <li><a href="#" className="hover:text-accent transition-colors duration-200">Careers</a></li>
+              <li><Link href="/testimonials" className="hover:text-accent transition-colors duration-200">Testimonials</Link></li>
             </ul>
           </div>
           
@@ -48,13 +50,13 @@ export default function Footer() {
               <li className="flex items-start gap-3">
                 <Phone className="w-5 h-5 text-accent mt-0.5" />
                 <div className="space-y-1">
-                  <a href="tel:+2348034783848" className="hover:text-accent transition-colors duration-200 block">08034783848</a>
-                  <a href="tel:+2347025251073" className="hover:text-accent transition-colors duration-200 block">07025251073</a>
+                  <a href={`tel:${settings.supportPhone1.replace(/\s+/g, '')}`} className="hover:text-accent transition-colors duration-200 block">{settings.supportPhone1}</a>
+                  <a href={`tel:${settings.supportPhone2.replace(/\s+/g, '')}`} className="hover:text-accent transition-colors duration-200 block">{settings.supportPhone2}</a>
                 </div>
               </li>
               <li className="flex items-start gap-3">
                 <Mail className="w-5 h-5 text-accent mt-0.5" />
-                <a href="mailto:support@henryteeloans.com" className="hover:text-accent transition-colors duration-200">support@henryteeloans.com</a>
+                <a href={`mailto:${settings.adminEmail}`} className="hover:text-accent transition-colors duration-200">{settings.adminEmail}</a>
               </li>
               <li className="flex items-start gap-3">
                 <MapPin className="w-5 h-5 text-accent mt-0.5" />

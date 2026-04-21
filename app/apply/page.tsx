@@ -7,8 +7,11 @@ import { CheckCircle, AlertCircle, Loader2, FileText, Info } from 'lucide-react'
 import Header from '@/components/header';
 import Footer from '@/components/footer';
 import { toast } from 'sonner';
+import { useSettings } from '@/components/settings-provider';
 
 export default function ApplyPage() {
+  const settings = useSettings();
+
   const [formData, setFormData] = useState({
     agreementDay: new Date().getDate().toString(),
     agreementMonth: new Date().toLocaleString('default', { month: 'long' }),
@@ -17,7 +20,7 @@ export default function ApplyPage() {
     loanAmount: '',
     previousLoan: '',
     totalLoan: '',
-    interestRate: '20%',
+    interestRate: `${settings.interestRate}%`,
     
     // Loan Requirements
     fullName: '',

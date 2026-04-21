@@ -5,9 +5,11 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Phone, Menu, X, ArrowRight } from 'lucide-react';
 import Image from 'next/image';
+import { useSettings } from '@/components/settings-provider';
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const settings = useSettings();
 
   return (
     <>
@@ -31,13 +33,13 @@ export default function Header() {
             </nav>
             <div className="flex items-center gap-3 sm:gap-5">
               <div className="hidden lg:flex flex-col items-end gap-0">
-                <a href="tel:+2348034783848" className="flex items-center gap-2 text-[13px] text-primary font-bold hover:text-accent transition-colors">
+                <a href={`tel:${settings.supportPhone1.replace(/\s+/g, '')}`} className="flex items-center gap-2 text-[13px] text-primary font-bold hover:text-accent transition-colors">
                   <Phone className="w-3 h-3 text-accent" />
-                  08034783848
+                  {settings.supportPhone1}
                 </a>
-                <a href="tel:+2347025251073" className="flex items-center gap-2 text-[13px] text-primary font-bold hover:text-accent transition-colors">
+                <a href={`tel:${settings.supportPhone2.replace(/\s+/g, '')}`} className="flex items-center gap-2 text-[13px] text-primary font-bold hover:text-accent transition-colors">
                   <Phone className="w-3 h-3 text-accent" />
-                  07025251073
+                  {settings.supportPhone2}
                 </a>
               </div>
               <Link href="/apply">
@@ -74,13 +76,13 @@ export default function Header() {
               <div className="pt-4">
                 <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">Contact Support</p>
                 <div className="space-y-3">
-                  <a href="tel:+2348034783848" className="flex items-center gap-3 text-lg text-primary font-bold hover:text-accent transition-colors bg-slate-50 p-4 rounded-xl border border-slate-100">
+                  <a href={`tel:${settings.supportPhone1.replace(/\s+/g, '')}`} className="flex items-center gap-3 text-lg text-primary font-bold hover:text-accent transition-colors bg-slate-50 p-4 rounded-xl border border-slate-100">
                     <Phone className="w-5 h-5 text-accent" />
-                    08034783848
+                    {settings.supportPhone1}
                   </a>
-                  <a href="tel:+2347025251073" className="flex items-center gap-3 text-lg text-primary font-bold hover:text-accent transition-colors bg-slate-50 p-4 rounded-xl border border-slate-100">
+                  <a href={`tel:${settings.supportPhone2.replace(/\s+/g, '')}`} className="flex items-center gap-3 text-lg text-primary font-bold hover:text-accent transition-colors bg-slate-50 p-4 rounded-xl border border-slate-100">
                     <Phone className="w-5 h-5 text-accent" />
-                    07025251073
+                    {settings.supportPhone2}
                   </a>
                 </div>
               </div>

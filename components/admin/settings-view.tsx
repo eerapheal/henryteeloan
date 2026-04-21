@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -18,14 +18,61 @@ import { toast } from "sonner";
 
 export default function SettingsView() {
   const [loading, setLoading] = useState(false);
+  const [isFetching, setIsFetching] = useState(true);
+  const [settings, setSettings] = useState({
+    interestRate: 20,
+    maxLoanAmount: 500000,
+    adminEmail: "santech901@gmail.com",
+    supportPhone1: "08034783848",
+    supportPhone2: "07025251073",
+  });
 
-  const handleSave = async (section: string) => {
+  useEffect(() => {
+    fetch('/api/admin/settings')
+      .then(res => res.json())
+      .then(data => {
+        if (!data.error) {
+          setSettings(data);
+        }
+        setIsFetching(false);
+      })
+      .catch(err => {
+        console.error("Failed to load settings", err);
+        setIsFetching(false);
+      });
+  }, []);
+
+  const handleSave = async (section: string, payload: any) => {
     setLoading(true);
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    try {
+      const res = await fetch('/api/admin/settings', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      if (res.ok) {
+        toast.success(`${section} updated successfully`);
+      } else {
+        toast.error(`Failed to update ${section}`);
+      }
+    } catch (error) {
+      toast.error(`An error occurred while updating ${section}`);
+    }
     setLoading(false);
-    toast.success(`${section} updated successfully`);
   };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setSettings(prev => ({ ...prev, [name]: value }));
+  };
+
+  if (isFetching) {
+    return (
+      <div className="flex justify-center items-center h-64">
+        <Loader2 className="w-8 h-8 animate-spin text-primary" />
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-5xl mx-auto space-y-10 animate-fadeIn">
@@ -44,15 +91,15 @@ export default function SettingsView() {
               <Label className="flex items-center gap-2">
                 <Percent className="w-4 h-4" /> Default Interest Rate (%)
               </Label>
-              <Input type="number" defaultValue={20} className="rounded-xl" />
+              <Input type="number" name="interestRate" value={settings.interestRate} onChange={handleChange} className="rounded-xl" />
             </div>
             <div className="space-y-2">
               <Label>Maximum Loan Amount (₦)</Label>
-              <Input type="number" defaultValue={500000} className="rounded-xl" />
+              <Input type="number" name="maxLoanAmount" value={settings.maxLoanAmount} onChange={handleChange} className="rounded-xl" />
             </div>
             <Button 
               className="w-full rounded-xl gap-2" 
-              onClick={() => handleSave("System Settings")}
+              onClick={() => handleSave("System Settings", { interestRate: settings.interestRate, maxLoanAmount: settings.maxLoanAmount })}
               disabled={loading}
             >
               {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
@@ -65,16 +112,21 @@ export default function SettingsView() {
               <Label className="flex items-center gap-2">
                 <Bell className="w-4 h-4" /> Admin Notification Email
               </Label>
-              <Input type="email" defaultValue="santech901@gmail.com" className="rounded-xl" />
+              <Input type="email" name="adminEmail" value={settings.adminEmail} onChange={handleChange} className="rounded-xl" />
             </div>
             <div className="space-y-2">
-              <Label>Support Phone Number</Label>
-              <Input type="text" defaultValue="08034783848" className="rounded-xl" />
+              <Label>Primary Support Phone Number</Label>
+              <Input type="text" name="supportPhone1" value={settings.supportPhone1} onChange={handleChange} className="rounded-xl" />
+            </div>
+            <div className="space-y-2">
+              <Label>Secondary Support Phone Number</Label>
+              <Input type="text" name="supportPhone2" value={settings.supportPhone2} onChange={handleChange} className="rounded-xl" />
             </div>
             <Button 
               variant="outline" 
               className="w-full rounded-xl gap-2"
-              onClick={() => handleSave("Communication Settings")}
+              onClick={() => handleSave("Communication Settings", { adminEmail: settings.adminEmail, supportPhone1: settings.supportPhone1, supportPhone2: settings.supportPhone2 })}
+              disabled={loading}
             >
               Update Contact Info
             </Button>
@@ -104,7 +156,7 @@ export default function SettingsView() {
               </div>
             </div>
             <div className="flex justify-end">
-              <Button type="button" variant="default" className="rounded-xl px-8" onClick={() => handleSave("Password")}>
+              <Button type="button" variant="default" className="rounded-xl px-8" onClick={() => toast.info("Password update functionality is coming soon")}>
                 Update Password
               </Button>
             </div>

@@ -1,6 +1,8 @@
 import { jsPDF } from "jspdf";
+import { getSettings } from "@/lib/settings";
 
 export async function generateLoanAgreementPDF(data: any) {
+  const settings = await getSettings();
   const doc = new jsPDF();
   const margin = 20;
   const pageWidth = doc.internal.pageSize.getWidth();
@@ -53,7 +55,7 @@ export async function generateLoanAgreementPDF(data: any) {
     "• The Borrower agrees to repay the total amount as stipulated above within the agreed duration.",
     "• Failure to repay on time may attract additional late payment fees of 5% per week.",
     "• The Borrower confirms that all information provided in the application is true and correct.",
-    "• This document must be signed and returned to support@henryteeloans.com to finalize disbursement."
+    `• This document must be signed and returned to ${settings.adminEmail} to finalize disbursement.`
   ];
   
   terms.forEach(term => {
@@ -79,7 +81,7 @@ export async function generateLoanAgreementPDF(data: any) {
   y += 30;
   doc.setFontSize(9);
   doc.setTextColor(150);
-  doc.text("This is a computer-generated document. For official inquiries, contact 08034783848.", pageWidth / 2, y, { align: "center" });
+  doc.text(`This is a computer-generated document. For official inquiries, contact ${settings.supportPhone1}.`, pageWidth / 2, y, { align: "center" });
 
   // Return as Buffer or Base64
   return doc.output("arraybuffer");
