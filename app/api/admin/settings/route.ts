@@ -2,7 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import clientPromise from "@/lib/mongodb";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
-import { getSettings, defaultSettings } from "@/lib/settings";
+import { getSettings } from "@/lib/settings";
+import { defaultSettings } from "@/lib/settings-constants";
 
 export async function GET() {
   try {

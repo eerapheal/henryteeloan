@@ -54,8 +54,7 @@ export async function generateLoanAgreementPDF(data: any) {
   const terms = [
     "• The Borrower agrees to repay the total amount as stipulated above within the agreed duration.",
     "• Failure to repay on time may attract additional late payment fees of 5% per week.",
-    "• The Borrower confirms that all information provided in the application is true and correct.",
-    `• This document must be signed and returned to ${settings.adminEmail} to finalize disbursement.`
+    "• The Borrower confirms that all information provided in the application is true and correct."
   ];
   
   terms.forEach(term => {
@@ -67,16 +66,14 @@ export async function generateLoanAgreementPDF(data: any) {
   y += 20;
   doc.setFontSize(12);
   doc.setFont("helvetica", "bold");
-  doc.text("4. SIGNATURE SECTION", margin, y);
+  doc.text("4. ACKNOWLEDGMENT", margin, y);
   
-  y += 20;
-  doc.line(margin, y, margin + 80, y); // Borrower line
-  doc.line(pageWidth - margin - 80, y, pageWidth - margin, y); // Lender line
-  
-  y += 7;
-  doc.setFontSize(10);
-  doc.text("Borrower's Signature & Date", margin, y);
-  doc.text("Lender's Signature (Henrytee Loans)", pageWidth - margin - 80, y);
+  y += 15;
+  doc.setFontSize(11);
+  doc.setFont("helvetica", "italic");
+  const ackText = `I, ${data.fullName}, hereby confirm that all information provided is accurate and I agree to the terms of this loan agreement as stated above.`;
+  const ackLines = doc.splitTextToSize(ackText, pageWidth - margin * 2);
+  doc.text(ackLines, margin, y);
 
   y += 30;
   doc.setFontSize(9);

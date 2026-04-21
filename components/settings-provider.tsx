@@ -1,7 +1,7 @@
 'use client';
 
 import React, { createContext, useContext } from 'react';
-import { SystemSettings, defaultSettings } from '@/lib/settings';
+import { SystemSettings, defaultSettings } from '@/lib/settings-constants';
 
 const SettingsContext = createContext<SystemSettings>(defaultSettings);
 
