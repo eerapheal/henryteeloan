@@ -202,23 +202,23 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
               {
-                name: "Michael Helmi",
-                text: "I was blown away by how caring and personal attention my company received. They made me feel welcome and had my best interest through the whole process.",
+                name: "Chinedu Okeke",
+                text: "I was blown away by the speed of their service. As a small business owner in Lagos, getting funds quickly is critical, and Henrytee Loans delivered.",
                 rating: 5
               },
               {
-                name: "John Nemeh",
-                text: "Have done multiple loans with Dennis. The guy goes all out to make it work. Very professional, competent and concerned with maximizing your experience.",
+                name: "Fatima Abubakar",
+                text: "Have done multiple loans with them. The team goes all out to make it work. Very professional, competent and concerned with maximizing your experience.",
                 rating: 5
               },
               {
-                name: "Uri Crews",
-                text: "Brandon took great care of our funding needs. His whole team was professional, responsive and understanding. Highly recommend their services.",
+                name: "Oluwaseun Adebayo",
+                text: "Their customer service took great care of our funding needs. The whole team was professional, responsive and understanding. Highly recommend their services.",
                 rating: 5
               },
               {
-                name: "Joshua Segura",
-                text: "Carlos helped secure $60K in funding for my company. Couldn&apos;t be more impressed with his efficiency and professionalism throughout the process.",
+                name: "Emeka Nwachukwu",
+                text: "They helped secure the exact funding my company needed to scale our operations. Couldn't be more impressed with their efficiency and professionalism throughout.",
                 rating: 5
               }
             ].map((testimonial, i) => (
@@ -248,8 +248,8 @@ export default function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {[
-              { title: 'Growing with Henrytee Loans', owner: 'Michael Helmi', image: '/testimonial-video-1.png' },
-              { title: 'The Fast Funding Path', owner: 'Sarah Martinez', image: '/testimonial-video-2.png' }
+              { title: 'Growing with Henrytee Loans', owner: 'Chinedu Okeke', image: '/testimonial-video-1.png' },
+              { title: 'The Fast Funding Path', owner: 'Aisha Bello', image: '/testimonial-video-2.png' }
             ].map((video, i) => (
               <Link key={i} href="/testimonials">
                 <div className="group relative aspect-video rounded-xl overflow-hidden shadow-lg border border-slate-100 hover:shadow-2xl transition-all duration-500">
