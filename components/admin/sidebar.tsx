@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { signOut } from "next-auth/react";
+import Image from "next/image";
 
 const menuItems = [
   { icon: LayoutDashboard, label: "Overview", href: "/admin", tab: "overview" },
@@ -26,15 +27,15 @@ export default function AdminSidebar({ activeTab }: { activeTab: string }) {
   return (
     <div className="w-72 bg-white border-r border-slate-200 flex flex-col h-screen sticky top-0">
       <div className="p-8 border-b border-slate-100">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center text-white shadow-lg shadow-primary/20">
-            <ShieldCheck className="w-6 h-6" />
-          </div>
-          <div>
-            <h1 className="font-bold text-slate-900 leading-none">Henrytee</h1>
-            <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">Admin Portal</span>
-          </div>
-        </div>
+        <Link href="/admin" className="flex items-center">
+          <Image 
+            src="/henrytee.png" 
+            alt="Henrytee Admin" 
+            width={160} 
+            height={50} 
+            className="h-10 w-auto object-contain"
+          />
+        </Link>
       </div>
 
       <nav className="flex-grow p-6 space-y-2">

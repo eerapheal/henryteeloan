@@ -10,6 +10,8 @@ import AdminSidebar from "@/components/admin/sidebar";
 import StatsGrid from "@/components/admin/stats-grid";
 import LoanTable from "@/components/admin/loan-table";
 import UserTable from "@/components/admin/user-table";
+import AnalyticsView from "@/components/admin/analytics-view";
+import SettingsView from "@/components/admin/settings-view";
 import { 
   BarChart, 
   Bar, 
@@ -225,16 +227,12 @@ export default function AdminDashboard() {
           </div>
         )}
 
-        {(activeTab === 'analytics' || activeTab === 'settings') && (
-          <div className="py-20 text-center animate-fadeIn">
-            <div className="w-20 h-20 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-6 text-slate-300">
-              <Settings className="w-10 h-10" />
-            </div>
-            <h3 className="text-xl font-bold text-slate-900">Advanced {activeTab}</h3>
-            <p className="text-slate-500 max-w-sm mx-auto mt-2">
-              This module is currently being optimized for high-performance data processing. Check back soon.
-            </p>
-          </div>
+        {activeTab === 'analytics' && (
+          <AnalyticsView stats={stats} />
+        )}
+
+        {activeTab === 'settings' && (
+          <SettingsView />
         )}
       </main>
     </div>

@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Phone, Menu, X, ArrowRight } from 'lucide-react';
+import Image from 'next/image';
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -13,11 +14,15 @@ export default function Header() {
       <header className="border-b border-slate-200 bg-white/80 backdrop-blur-md sticky top-0 z-50 transition-all duration-300 shadow-sm">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
-            <Link href="/" className="flex items-center gap-2 sm:gap-3 group shrink-0">
-              <div className="w-9 h-9 sm:w-10 sm:h-10 bg-primary rounded-xl flex items-center justify-center shadow-lg shadow-primary/20 group-hover:scale-105 transition-transform duration-300">
-                <span className="text-accent font-bold text-lg sm:text-xl font-serif">H</span>
-              </div>
-              <span className="font-bold text-lg sm:text-xl text-primary tracking-tight">Henrytee Loans</span>
+            <Link href="/" className="flex items-center group shrink-0">
+              <Image 
+                src="/henrytee.png" 
+                alt="Henrytee Loans" 
+                width={280} 
+                height={60} 
+                className="h-19 w-[130px] transition-transform duration-300 group-hover:scale-105"
+                priority
+              />
             </Link>
             <nav className="hidden md:flex items-center gap-6 lg:gap-8">
               <Link href="/products" className="text-slate-600 font-medium hover:text-accent transition-colors">Products</Link>

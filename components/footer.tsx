@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { Phone, Mail, MapPin } from 'lucide-react';
+import Image from 'next/image';
 
 export default function Footer() {
   return (
@@ -7,11 +8,14 @@ export default function Footer() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
           <div className="col-span-1 md:col-span-1 animate-fadeInLeft">
-            <Link href="/" className="flex items-center gap-3 mb-6 group">
-              <div className="w-10 h-10 bg-accent rounded-xl flex items-center justify-center shadow-lg shadow-accent/20 group-hover:scale-105 transition-transform duration-300">
-                <span className="text-primary font-bold text-xl font-serif">H</span>
-              </div>
-              <span className="font-bold text-xl text-white tracking-tight">Henrytee Loans</span>
+            <Link href="/" className="flex items-center mb-6 group">
+              <Image 
+                src="/henrytee.png" 
+                alt="Henrytee Loans" 
+                width={160} 
+                height={50} 
+                className="h-10 w-auto object-contain transition-transform duration-300 group-hover:scale-105 brightness-0 invert"
+              />
             </Link>
             <p className="text-sm text-slate-400 mb-6 leading-relaxed">
               Empowering businesses with fast, flexible, and fair financing solutions. Your growth is our priority.
