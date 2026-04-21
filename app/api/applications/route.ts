@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import clientPromise from '@/lib/mongodb';
 import { sendAdminNotification, sendApplicantConfirmation, sendGuarantorNotification } from '@/lib/email';
+import { generateLoanAgreementPDF } from '@/lib/pdf';
 
 export async function POST(request: NextRequest) {
   try {
@@ -83,11 +84,14 @@ export async function POST(request: NextRequest) {
         applicationId,
       };
 
+      // Generate Loan Agreement PDF
+      const pdfBuffer = await generateLoanAgreementPDF(emailData);
+
       // Send admin notification
       await sendAdminNotification(emailData as any);
       
-      // Send applicant confirmation
-      await sendApplicantConfirmation(emailData as any);
+      // Send applicant confirmation with PDF
+      await sendApplicantConfirmation(emailData as any, pdfBuffer);
 
       // Send guarantor notification
       await sendGuarantorNotification(emailData as any);

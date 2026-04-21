@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { useState, useEffect } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
-import { Loader2, RefreshCcw, Search, Filter, Settings } from "lucide-react";
+import { Loader2, RefreshCcw, Search, Filter, Settings, Menu } from "lucide-react";
 import AdminSidebar from "@/components/admin/sidebar";
 import StatsGrid from "@/components/admin/stats-grid";
 import LoanTable from "@/components/admin/loan-table";
@@ -38,6 +38,7 @@ export default function AdminDashboard() {
   const [users, setUsers] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const fetchData = async () => {
     setRefreshing(true);
@@ -84,16 +85,30 @@ export default function AdminDashboard() {
 
   return (
     <div className="flex min-h-screen bg-[#F8FAF8]">
-      <AdminSidebar activeTab={activeTab} />
+      <AdminSidebar 
+        activeTab={activeTab} 
+        isOpen={isSidebarOpen} 
+        onClose={() => setIsSidebarOpen(false)} 
+      />
       
-      <main className="flex-grow p-8 lg:p-12 overflow-y-auto">
+      <main className="flex-grow p-4 lg:p-12 overflow-y-auto">
         {/* Top Bar */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10">
-          <div>
-            <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight capitalize">
-              {activeTab} Dashboard
-            </h2>
-            <p className="text-slate-500 mt-1">Manage your loan business with precision.</p>
+          <div className="flex items-center gap-4">
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              className="lg:hidden" 
+              onClick={() => setIsSidebarOpen(true)}
+            >
+              <Menu className="w-6 h-6" />
+            </Button>
+            <div>
+              <h2 className="text-2xl lg:text-3xl font-extrabold text-slate-900 tracking-tight capitalize">
+                {activeTab} Dashboard
+              </h2>
+              <p className="text-sm text-slate-500 mt-1">Manage your loan business with precision.</p>
+            </div>
           </div>
           
           <div className="flex items-center gap-4">

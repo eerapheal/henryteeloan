@@ -150,7 +150,16 @@ export async function sendAdminNotification(data: ApplicationData) {
   }
 }
 
-export async function sendApplicantConfirmation(data: ApplicationData) {
+export async function sendApplicantConfirmation(data: ApplicationData, pdfBuffer?: ArrayBuffer) {
+  const attachments: any[] = [];
+  
+  if (pdfBuffer) {
+    attachments.push({
+      filename: `Loan_Agreement_${data.applicationId}.pdf`,
+      content: Buffer.from(pdfBuffer),
+    });
+  }
+
   const emailContent = `
     <!DOCTYPE html>
     <html>
@@ -216,6 +225,7 @@ export async function sendApplicantConfirmation(data: ApplicationData) {
       to: data.email,
       subject: 'Loan Agreement Received - Henrytee Loans',
       html: emailContent,
+      attachments: attachments,
     });
   } catch (error) {
     console.error('Error sending applicant confirmation:', error);

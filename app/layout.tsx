@@ -31,20 +31,26 @@ export const metadata: Metadata = {
 
 import { Toaster } from '@/components/ui/sonner'
 import { AuthProvider } from '@/components/auth-provider'
+import { SettingsProvider } from '@/components/settings-provider'
+import { getSettings } from '@/lib/settings'
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  const settings = await getSettings();
+
   return (
     <html lang="en">
       <body className="font-sans antialiased">
-        <AuthProvider>
-          {children}
-          <Toaster position="top-center" richColors />
-          {process.env.NODE_ENV === 'production' && <Analytics />}
-        </AuthProvider>
+        <SettingsProvider settings={settings}>
+          <AuthProvider>
+            {children}
+            <Toaster position="top-center" richColors />
+            {process.env.NODE_ENV === 'production' && <Analytics />}
+          </AuthProvider>
+        </SettingsProvider>
       </body>
     </html>
   )
