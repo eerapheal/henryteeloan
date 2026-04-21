@@ -1,22 +1,59 @@
 import { jsPDF } from "jspdf";
 import { getSettings } from "@/lib/settings";
+import fs from 'fs';
+import path from 'path';
 
 export async function generateLoanAgreementPDF(data: any) {
   const settings = await getSettings();
   const doc = new jsPDF();
   const margin = 20;
   const pageWidth = doc.internal.pageSize.getWidth();
-  let y = 30;
+  let y = 20;
 
-  // Header
-  doc.setFontSize(22);
-  doc.setTextColor(0, 102, 51); // Henrytee Green
-  doc.text("LOAN ACKNOWLEDGMENT AGREEMENT", pageWidth / 2, y, { align: "center" });
+  // Add Logo
+  try {
+    const logoPath = path.join(process.cwd(), 'public', 'henrytee.png');
+    if (fs.existsSync(logoPath)) {
+      const logoBuffer = fs.readFileSync(logoPath);
+      const logoBase64 = `data:image/png;base64,${logoBuffer.toString('base64')}`;
+      doc.addImage(logoBase64, 'PNG', margin, y, 50, 15);
+    } else {
+      doc.setFontSize(20);
+      doc.setTextColor(0, 102, 51);
+      doc.text("Henrytee Loans", margin, y + 10);
+    }
+  } catch (error) {
+    console.error("Error loading logo for PDF:", error);
+  }
+
+  // Add Company Address (Right aligned)
+  doc.setFontSize(9);
+  doc.setTextColor(100);
+  const addressX = pageWidth - margin;
+  doc.text("Henrytee Loans", addressX, y + 5, { align: "right" });
+  doc.text("123 Business Avenue, Suite 400", addressX, y + 10, { align: "right" });
+  doc.text("Victoria Island, Lagos, Nigeria", addressX, y + 15, { align: "right" });
+  doc.text(`${settings.supportPhone1} | ${settings.adminEmail}`, addressX, y + 20, { align: "right" });
+
+  y += 40;
+  
+  // Divider Line
+  doc.setDrawColor(200, 200, 200);
+  doc.line(margin, y, pageWidth - margin, y);
   
   y += 15;
+
+  // Document Title
+  doc.setFontSize(22);
+  doc.setTextColor(0, 102, 51); // Henrytee Green
+  doc.setFont("helvetica", "bold");
+  doc.text("LOAN ACKNOWLEDGMENT AGREEMENT", pageWidth / 2, y, { align: "center" });
+  
+  y += 10;
   doc.setFontSize(10);
   doc.setTextColor(100);
-  doc.text(`Application ID: ${data.applicationId}`, pageWidth / 2, y, { align: "center" });
+  doc.setFont("helvetica", "normal");
+  doc.text(`Application ID: ${data.applicationId}   |   Date: ${data.agreementDate}`, pageWidth / 2, y, { align: "center" });
   
   y += 20;
   doc.setFontSize(12);
