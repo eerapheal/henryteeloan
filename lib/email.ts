@@ -72,7 +72,7 @@ export async function sendAdminNotification(data: ApplicationData) {
         <!-- Header -->
         <div style="background-color: #006633; padding: 30px; text-align: center;">
           <h1 style="color: #ffffff; margin: 0; font-size: 24px; font-weight: 700;">New Loan Agreement</h1>
-          <p style="color: #d1d5db; margin: 10px 0 0 0; font-size: 14px;">Application ID: ${data.applicationId}</p>
+          <p style="color: #d1d5db; margin: 10px 0 0 0; font-size: 14px;">Application ID: ${data?.applicationId?.toString()}</p>
         </div>
         
         <!-- Content -->
@@ -179,7 +179,7 @@ export async function sendApplicantConfirmation(data: ApplicationData) {
           <h3 style="font-size: 18px; color: #006633; margin: 30px 0 15px 0;">Summary of Agreement</h3>
           <div style="background-color: #f9fafb; border: 1px solid #e5e7eb; border-radius: 12px; padding: 20px;">
             <table style="width: 100%; border-collapse: collapse;">
-              <tr><td style="padding: 8px 0; color: #64748b; width: 45%;">Application ID</td><td style="padding: 8px 0; font-weight: 700; font-family: monospace;">${data.applicationId}</td></tr>
+              <tr><td style="padding: 8px 0; color: #64748b; width: 45%;">Application ID</td><td style="padding: 8px 0; font-weight: 700; font-family: monospace;">${data?.applicationId}</td></tr>
               <tr><td style="padding: 8px 0; color: #64748b;">Loan Amount</td><td style="padding: 8px 0; font-weight: 700; color: #006633;">₦${data.loanAmount.toLocaleString()}</td></tr>
               <tr><td style="padding: 8px 0; color: #64748b;">Duration</td><td style="padding: 8px 0; font-weight: 600;">${data.loanDuration}</td></tr>
             </table>
@@ -291,5 +291,71 @@ export async function sendGuarantorNotification(data: ApplicationData) {
   } catch (error) {
     console.error('Error sending guarantor notification:', error);
     throw error;
+  }
+}
+export async function sendLoanStatusUpdateNotification(
+  email: string,
+  fullName: string,
+  status: string,
+  loanAmount: number,
+  applicationId: string
+) {
+  let statusColor = '#006633';
+  let statusText = 'Approved';
+  let message = 'Congratulations! Your loan application has been approved.';
+  let icon = '✅';
+
+  if (status === 'rejected') {
+    statusColor = '#dc2626';
+    statusText = 'Rejected';
+    message = 'We regret to inform you that your loan application has been rejected at this time.';
+    icon = '❌';
+  } else if (status === 'paid') {
+    statusColor = '#2563eb';
+    statusText = 'Paid in Full';
+    message = 'Thank you! Your loan has been marked as fully paid.';
+    icon = '💰';
+  }
+
+  const emailContent = `
+    <!DOCTYPE html>
+    <html>
+    <head><meta charset="utf-8"></head>
+    <body style="font-family: sans-serif; background-color: #f8fafc; padding: 40px 20px;">
+      <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
+        <div style="background-color: ${statusColor}; padding: 40px; text-align: center;">
+          <div style="font-size: 48px; margin-bottom: 20px;">${icon}</div>
+          <h1 style="color: #ffffff; margin: 0; font-size: 24px;">Loan Status: ${statusText}</h1>
+        </div>
+        <div style="padding: 40px;">
+          <p style="font-size: 16px; color: #475569; margin-top: 0;">Dear ${fullName},</p>
+          <p style="font-size: 16px; color: #1e293b; line-height: 1.6;">${message}</p>
+          
+          <div style="background-color: #f1f5f9; padding: 20px; border-radius: 12px; margin: 30px 0;">
+            <table style="width: 100%;">
+              <tr><td style="color: #64748b;">Application ID:</td><td style="text-align: right; font-weight: 700;">${applicationId?.toString()}</td></tr>
+              <tr><td style="color: #64748b;">Loan Amount:</td><td style="text-align: right; font-weight: 700;">₦${loanAmount.toLocaleString()}</td></tr>
+            </table>
+          </div>
+
+          <p style="font-size: 14px; color: #64748b; margin-bottom: 0;">If you have any questions, please contact our support team.</p>
+        </div>
+        <div style="background-color: #f8fafc; padding: 20px; text-align: center; border-top: 1px solid #e2e8f0;">
+          <p style="margin: 0; color: #94a3b8; font-size: 12px;">&copy; ${new Date().getFullYear()} Henrytee Loans</p>
+        </div>
+      </div>
+    </body>
+    </html>
+  `;
+
+  try {
+    await transporter.sendMail({
+      from: process.env.EMAIL_USER,
+      to: email,
+      subject: `Loan Update: ${statusText} - Henrytee Loans`,
+      html: emailContent,
+    });
+  } catch (error) {
+    console.error('Error sending status update notification:', error);
   }
 }
