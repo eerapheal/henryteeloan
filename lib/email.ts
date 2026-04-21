@@ -14,19 +14,52 @@ interface ApplicationData {
   phone: string;
   email: string;
   nin: string;
+  ninCopy?: string;
+  borrowerName: string;
   loanAmount: number;
+  previousLoan: number;
   totalLoan: number;
+  interestRate: string;
   loanDuration: string;
   placeOfWork: string;
+  homeAddress: string;
+  officeAddress: string;
   guarantorName: string;
   guarantorEmail: string;
   guarantorPhone: string;
+  guarantorNin: string;
   applicationId: string;
   agreementDate: string;
 }
 
 export async function sendAdminNotification(data: ApplicationData) {
   const adminEmail = process.env.ADMIN_EMAIL || 'support@henryteeloans.com';
+
+  // Prepare attachments if NIN image is provided
+  const attachments: any[] = [];
+  let ninImageHtml = '';
+
+  if (data.ninCopy && data.ninCopy.includes('base64,')) {
+    const base64Data = data.ninCopy.split('base64,')[1];
+    const mimeType = data.ninCopy.split(';')[0].split(':')[1];
+    const extension = mimeType.split('/')[1] || 'png';
+
+    attachments.push({
+      filename: `nin_copy.${extension}`,
+      content: base64Data,
+      encoding: 'base64',
+      cid: 'ninImage'
+    });
+
+    ninImageHtml = `
+      <div style="margin-top: 25px;">
+        <h2 style="font-size: 18px; color: #006633; border-bottom: 2px solid #f1f5f9; padding-bottom: 10px;">NIN Document Preview</h2>
+        <div style="background-color: #f8fafc; padding: 15px; border-radius: 12px; text-align: center;">
+          <img src="cid:ninImage" style="max-width: 100%; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);" alt="NIN Copy" />
+        </div>
+      </div>
+    `;
+  }
 
   const emailContent = `
     <!DOCTYPE html>
@@ -35,7 +68,7 @@ export async function sendAdminNotification(data: ApplicationData) {
       <meta charset="utf-8">
     </head>
     <body style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f0f4f0; margin: 0; padding: 40px 20px; color: #013220;">
-      <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);">
+      <div style="max-width: 650px; margin: 0 auto; background-color: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);">
         <!-- Header -->
         <div style="background-color: #006633; padding: 30px; text-align: center;">
           <h1 style="color: #ffffff; margin: 0; font-size: 24px; font-weight: 700;">New Loan Agreement</h1>
@@ -45,40 +78,58 @@ export async function sendAdminNotification(data: ApplicationData) {
         <!-- Content -->
         <div style="padding: 30px;">
           <div style="margin-bottom: 25px;">
-            <h2 style="font-size: 18px; color: #006633; border-bottom: 2px solid #f1f5f9; padding-bottom: 10px; margin-top: 0;">Borrower Information</h2>
+            <h2 style="font-size: 18px; color: #006633; border-bottom: 2px solid #f1f5f9; padding-bottom: 10px; margin-top: 0;">Agreement Header</h2>
+            <p style="font-style: italic; color: #475569; line-height: 1.6;">
+              Made on <strong>${data.agreementDate}</strong> between <strong>Ekpenisi Henry Happiness</strong> and <strong>${data.borrowerName}</strong>.
+            </p>
+          </div>
+
+          <div style="margin-bottom: 25px;">
+            <h2 style="font-size: 18px; color: #006633; border-bottom: 2px solid #f1f5f9; padding-bottom: 10px;">Borrower Personal Details</h2>
             <table style="width: 100%; border-collapse: collapse;">
-              <tr><td style="padding: 8px 0; border-bottom: 1px solid #f1f5f9; color: #64748b; width: 40%;">Name</td><td style="padding: 8px 0; border-bottom: 1px solid #f1f5f9; font-weight: 600;">${data.fullName}</td></tr>
+              <tr><td style="padding: 8px 0; border-bottom: 1px solid #f1f5f9; color: #64748b; width: 40%;">Full Name</td><td style="padding: 8px 0; border-bottom: 1px solid #f1f5f9; font-weight: 600;">${data.fullName}</td></tr>
               <tr><td style="padding: 8px 0; border-bottom: 1px solid #f1f5f9; color: #64748b;">Phone</td><td style="padding: 8px 0; border-bottom: 1px solid #f1f5f9; font-weight: 600;">${data.phone}</td></tr>
+              <tr><td style="padding: 8px 0; border-bottom: 1px solid #f1f5f9; color: #64748b;">Email</td><td style="padding: 8px 0; border-bottom: 1px solid #f1f5f9; font-weight: 600;">${data.email}</td></tr>
               <tr><td style="padding: 8px 0; border-bottom: 1px solid #f1f5f9; color: #64748b;">NIN</td><td style="padding: 8px 0; border-bottom: 1px solid #f1f5f9; font-weight: 600;">${data.nin}</td></tr>
-              <tr><td style="padding: 8px 0; color: #64748b;">Workplace</td><td style="padding: 8px 0; font-weight: 600;">${data.placeOfWork}</td></tr>
+              <tr><td style="padding: 8px 0; border-bottom: 1px solid #f1f5f9; color: #64748b;">Workplace</td><td style="padding: 8px 0; border-bottom: 1px solid #f1f5f9; font-weight: 600;">${data.placeOfWork}</td></tr>
+              <tr><td style="padding: 8px 0; border-bottom: 1px solid #f1f5f9; color: #64748b;">Home Address</td><td style="padding: 8px 0; border-bottom: 1px solid #f1f5f9; font-weight: 500;">${data.homeAddress}</td></tr>
+              <tr><td style="padding: 8px 0; color: #64748b;">Office Address</td><td style="padding: 8px 0; font-weight: 500;">${data.officeAddress}</td></tr>
             </table>
           </div>
 
           <div style="margin-bottom: 25px;">
-            <h2 style="font-size: 18px; color: #006633; border-bottom: 2px solid #f1f5f9; padding-bottom: 10px;">Loan Details</h2>
+            <h2 style="font-size: 18px; color: #006633; border-bottom: 2px solid #f1f5f9; padding-bottom: 10px;">Financial Details</h2>
             <table style="width: 100%; border-collapse: collapse;">
               <tr><td style="padding: 8px 0; border-bottom: 1px solid #f1f5f9; color: #64748b; width: 40%;">Loan Amount</td><td style="padding: 8px 0; border-bottom: 1px solid #f1f5f9; font-weight: 700; color: #006633;">₦${data.loanAmount.toLocaleString()}</td></tr>
+              <tr><td style="padding: 8px 0; border-bottom: 1px solid #f1f5f9; color: #64748b;">Previous Loan</td><td style="padding: 8px 0; border-bottom: 1px solid #f1f5f9; font-weight: 600;">₦${data.previousLoan.toLocaleString()}</td></tr>
               <tr><td style="padding: 8px 0; border-bottom: 1px solid #f1f5f9; color: #64748b;">Total Repayable</td><td style="padding: 8px 0; border-bottom: 1px solid #f1f5f9; font-weight: 700; color: #c5a059;">₦${data.totalLoan.toLocaleString()}</td></tr>
-              <tr><td style="padding: 8px 0; border-bottom: 1px solid #f1f5f9; color: #64748b;">Duration</td><td style="padding: 8px 0; border-bottom: 1px solid #f1f5f9; font-weight: 600;">${data.loanDuration}</td></tr>
-              <tr><td style="padding: 8px 0; color: #64748b;">Agreement Date</td><td style="padding: 8px 0; font-weight: 600;">${data.agreementDate}</td></tr>
+              <tr><td style="padding: 8px 0; border-bottom: 1px solid #f1f5f9; color: #64748b;">Interest Rate</td><td style="padding: 8px 0; border-bottom: 1px solid #f1f5f9; font-weight: 600;">${data.interestRate} monthly</td></tr>
+              <tr><td style="padding: 8px 0; color: #64748b;">Duration</td><td style="padding: 8px 0; font-weight: 600;">${data.loanDuration}</td></tr>
             </table>
           </div>
 
           <div style="margin-bottom: 25px;">
-            <h2 style="font-size: 18px; color: #006633; border-bottom: 2px solid #f1f5f9; padding-bottom: 10px;">Guarantor</h2>
+            <h2 style="font-size: 18px; color: #006633; border-bottom: 2px solid #f1f5f9; padding-bottom: 10px;">Guarantor Information</h2>
             <table style="width: 100%; border-collapse: collapse;">
-              <tr><td style="padding: 8px 0; color: #64748b; width: 40%;">Name</td><td style="padding: 8px 0; font-weight: 600;">${data.guarantorName}</td></tr>
+              <tr><td style="padding: 8px 0; border-bottom: 1px solid #f1f5f9; color: #64748b; width: 40%;">Name</td><td style="padding: 8px 0; border-bottom: 1px solid #f1f5f9; font-weight: 600;">${data.guarantorName}</td></tr>
+              <tr><td style="padding: 8px 0; border-bottom: 1px solid #f1f5f9; color: #64748b;">Phone</td><td style="padding: 8px 0; border-bottom: 1px solid #f1f5f9; font-weight: 600;">${data.guarantorPhone}</td></tr>
+              <tr><td style="padding: 8px 0; border-bottom: 1px solid #f1f5f9; color: #64748b;">Email</td><td style="padding: 8px 0; border-bottom: 1px solid #f1f5f9; font-weight: 600;">${data.guarantorEmail}</td></tr>
+              <tr><td style="padding: 8px 0; color: #64748b;">NIN</td><td style="padding: 8px 0; font-weight: 600;">${data.guarantorNin}</td></tr>
             </table>
           </div>
           
+          ${ninImageHtml}
+          
           <div style="text-align: center; margin-top: 30px;">
-            <a href="#" style="display: inline-block; background-color: #006633; color: #ffffff; padding: 14px 28px; text-decoration: none; border-radius: 8px; font-weight: 700; font-size: 16px;">Review Agreement</a>
+            <p style="color: #64748b; font-size: 14px; margin-bottom: 15px;">Review this agreement on the admin dashboard</p>
+            <a href="#" style="display: inline-block; background-color: #006633; color: #ffffff; padding: 14px 28px; text-decoration: none; border-radius: 8px; font-weight: 700; font-size: 16px;">View Dashboard</a>
           </div>
         </div>
         
         <!-- Footer -->
         <div style="background-color: #f8fafc; padding: 20px; text-align: center; border-top: 1px solid #e2e8f0;">
           <p style="margin: 0; color: #64748b; font-size: 12px;">Automated Alert from Henrytee Loans Internal System.</p>
+          <p style="margin: 5px 0 0 0; color: #94a3b8; font-size: 11px;">&copy; ${new Date().getFullYear()} Henrytee Loans. All rights reserved.</p>
         </div>
       </div>
     </body>
@@ -91,6 +142,7 @@ export async function sendAdminNotification(data: ApplicationData) {
       to: adminEmail,
       subject: `[NEW LOAN] ${data.fullName} - ₦${data.loanAmount.toLocaleString()}`,
       html: emailContent,
+      attachments: attachments,
     });
   } catch (error) {
     console.error('Error sending admin notification:', error);
