@@ -80,8 +80,8 @@ export default function TestimonialsPage() {
             </div>
             <div className="animate-fadeInRight">
               <img 
-                src="/testimonials-happy-customers.jpg" 
-                alt="Happy Nigerian customers" 
+                src="/testimonial-video-2.png" 
+                alt="Happy Nigerian entrepreneur" 
                 className="w-full h-auto rounded-2xl shadow-2xl animate-float border border-white/10"
               />
             </div>

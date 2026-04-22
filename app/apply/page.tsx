@@ -162,8 +162,8 @@ export default function ApplyPage() {
             </div>
             <div className="animate-fadeInRight">
               <img 
-                src="/products-showcase.jpg" 
-                alt="Henrytee Loans Professional Office" 
+                src="/testimonial-video-1.png" 
+                alt="Henrytee Loans Professional Underwriter" 
                 className="w-full h-auto rounded-2xl shadow-2xl animate-float border border-white/10"
               />
             </div>
@@ -203,15 +203,15 @@ export default function ApplyPage() {
             </Card>
           )}
 
-          <Card className="p-10 md:p-16 border border-[#E4E7EC] shadow-soft bg-white rounded-3xl animate-fadeInUp relative z-20 -mt-16">
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#0F2B46] text-white px-8 py-3 rounded-full font-bold shadow-lg flex items-center gap-2 border border-[#C8992C]/30 text-sm tracking-wider">
-              <ShieldCheck className="w-4 h-4 text-[#C8992C]" />
+          <Card className="px-5 py-10 md:p-10 border border-[#E4E7EC] shadow-soft bg-white rounded-3xl animate-fadeInUp relative z-20 -mt-16">
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#0F2B46] text-white px-4 py-3 rounded-full font-bold shadow-lg flex items-center gap-2 border border-[#C8992C]/30 text-sm tracking-wider">
+              <ShieldCheck className="w-6 h-4 text-[#C8992C]" />
               OFFICIAL SECURE FORM
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-12">
               {/* Agreement Header Section */}
-              <div className="space-y-8 text-[#1A2332] italic border-b border-[#E4E7EC] pb-10">
+              <div className="space-y-4 text-[#1A2332] italic border-b border-[#E4E7EC] pb-10">
                 <div className="flex flex-wrap items-center gap-3 leading-relaxed text-lg">
                   This loan agreement is made on this 
                   <input 
@@ -447,7 +447,7 @@ export default function ApplyPage() {
                   <h3 className="text-xl font-bold uppercase tracking-wider">Guarantor Information</h3>
                 </div>
                 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 bg-[#FAFBFC] p-8 rounded-3xl border border-[#E4E7EC]">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 bg-[#FAFBFC] p-5 rounded-3xl border border-[#E4E7EC]">
                   <div className="space-y-2">
                     <label className="text-[10px] font-bold text-[#5A6577] uppercase tracking-widest ml-1">Guarantor Name</label>
                     <input 
@@ -501,7 +501,7 @@ export default function ApplyPage() {
               </div>
 
               {/* Legal Note Section */}
-              <div className="bg-amber-50 border-l-4 border-[#C8992C] p-8 rounded-r-3xl space-y-4 shadow-sm">
+              <div className="bg-amber-50 border-l-4 border-[#C8992C] p-5 rounded-r-3xl space-y-4 shadow-sm">
                 <div className="flex items-center gap-2 text-[#C8992C] font-bold uppercase tracking-widest text-xs">
                   <AlertCircle className="w-5 h-5" />
                   Important Legal Note
@@ -511,7 +511,7 @@ export default function ApplyPage() {
                 </p>
               </div>
 
-                <div className="flex items-start gap-4 bg-[#0F2B46]/5 p-6 rounded-2xl border border-[#0F2B46]/10 cursor-pointer group transition-all hover:bg-[#0F2B46]/10">
+                <div className="flex items-start gap-4 bg-[#0F2B46]/5 p-5 rounded-2xl border border-[#0F2B46]/10 cursor-pointer group transition-all hover:bg-[#0F2B46]/10">
                   <input 
                     type="checkbox" 
                     id="agreeToTerms"

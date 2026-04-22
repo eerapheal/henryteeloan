@@ -84,8 +84,8 @@ export default function ProductsPage() {
             </div>
             <div className="animate-fadeInRight">
               <img 
-                src="/hero-business.jpg" 
-                alt="Nigerian business professionals" 
+                src="/testimonial-video-1.png" 
+                alt="Nigerian business professional" 
                 className="w-full h-auto rounded-2xl shadow-2xl animate-float border border-white/10"
               />
             </div>
