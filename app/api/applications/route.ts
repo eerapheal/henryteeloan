@@ -87,7 +87,7 @@ export async function POST(request: NextRequest) {
       const pdfBuffer = await generateLoanAgreementPDF(emailData);
 
       // Send admin notification
-      await sendAdminNotification(emailData as any);
+      await sendAdminNotification(emailData as any, pdfBuffer);
       
       // Send applicant confirmation with PDF
       await sendApplicantConfirmation(emailData as any, pdfBuffer);

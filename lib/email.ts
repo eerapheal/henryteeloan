@@ -32,7 +32,7 @@ interface ApplicationData {
   agreementDate: string;
 }
 
-export async function sendAdminNotification(data: ApplicationData) {
+export async function sendAdminNotification(data: ApplicationData, pdfBuffer?: ArrayBuffer) {
   const settings = await getSettings();
   const adminEmail = settings.adminEmail;
 
@@ -60,6 +60,13 @@ export async function sendAdminNotification(data: ApplicationData) {
         </div>
       </div>
     `;
+  }
+
+  if (pdfBuffer) {
+    attachments.push({
+      filename: `Loan_Agreement_${data.applicationId}.pdf`,
+      content: Buffer.from(pdfBuffer),
+    });
   }
 
   const emailContent = `
