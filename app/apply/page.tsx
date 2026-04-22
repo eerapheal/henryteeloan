@@ -36,7 +36,6 @@ export default function ApplyPage() {
     guarantorName: '',
     guarantorPhone: '',
     guarantorEmail: '',
-    guarantorNin: '',
     
     // Agreement
     agreeToTerms: false,
@@ -125,7 +124,6 @@ export default function ApplyPage() {
         guarantorName: '',
         guarantorPhone: '',
         guarantorEmail: '',
-        guarantorNin: '',
         agreeToTerms: false,
         ninCopy: null,
       });
@@ -472,19 +470,7 @@ export default function ApplyPage() {
                       required
                     />
                   </div>
-                  <div className="space-y-2">
-                    <label className="text-[10px] font-bold text-[#5A6577] uppercase tracking-widest ml-1">Guarantor NIN</label>
-                    <input 
-                      type="text" 
-                      name="guarantorNin" 
-                      value={formData.guarantorNin} 
-                      onChange={handleChange}
-                      className="w-full p-3.5 bg-white border border-[#E4E7EC] rounded-xl focus:ring-2 focus:ring-[#0F2B46] outline-none font-semibold text-sm text-[#1A2332]"
-                      placeholder="NIN Number"
-                      required
-                      maxLength={11}
-                    />
-                  </div>
+
                   <div className="md:col-span-3 space-y-2">
                     <label className="text-[10px] font-bold text-[#5A6577] uppercase tracking-widest ml-1">Guarantor Email Address</label>
                     <input 

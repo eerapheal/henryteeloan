@@ -24,7 +24,6 @@ export async function POST(request: NextRequest) {
       'guarantorName',
       'guarantorPhone',
       'guarantorEmail',
-      'guarantorNin',
       'ninCopy'
     ];
 
@@ -66,7 +65,6 @@ export async function POST(request: NextRequest) {
       guarantorName: body.guarantorName,
       guarantorPhone: body.guarantorPhone,
       guarantorEmail: body.guarantorEmail,
-      guarantorNin: body.guarantorNin,
       
       // Status
       status: 'pending',

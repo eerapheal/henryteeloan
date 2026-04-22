@@ -157,8 +157,8 @@ function AdminDashboardContent() {
                     <AreaChart data={stats?.chartData || []}>
                       <defs>
                         <linearGradient id="colorAmount" x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="5%" stopColor="#006633" stopOpacity={0.1}/>
-                          <stop offset="95%" stopColor="#006633" stopOpacity={0}/>
+                          <stop offset="5%" stopColor="#0F2B46" stopOpacity={0.1}/>
+                          <stop offset="95%" stopColor="#0F2B46" stopOpacity={0}/>
                         </linearGradient>
                       </defs>
                       <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
@@ -178,14 +178,7 @@ function AdminDashboardContent() {
                       <Tooltip 
                         contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)' }}
                       />
-                      <Area 
-                        type="monotone" 
-                        dataKey="amount" 
-                        stroke="#006633" 
-                        strokeWidth={3}
-                        fillOpacity={1} 
-                        fill="url(#colorAmount)" 
-                      />
+                      <Area type="monotone" dataKey="amount" stroke="#0F2B46" strokeWidth={3} fillOpacity={1} fill="url(#colorAmount)" />
                     </AreaChart>
                   </ResponsiveContainer>
                 </div>
@@ -196,15 +189,15 @@ function AdminDashboardContent() {
                 <div className="flex-grow flex items-center justify-center">
                   <div className="space-y-6 w-full">
                     {[
-                      { label: 'Approved', count: stats?.loans?.approved, color: 'bg-emerald-500', total: stats?.loans?.count },
-                      { label: 'Pending', count: stats?.loans?.pending, color: 'bg-amber-500', total: stats?.loans?.count },
+                      { label: 'Approved', count: stats?.loans?.approved, color: 'bg-[#C8992C]', total: stats?.loans?.count },
+                      { label: 'Pending', count: stats?.loans?.pending, color: 'bg-[#0F2B46]', total: stats?.loans?.count },
                       { label: 'Rejected', count: stats?.loans?.rejected, color: 'bg-rose-500', total: stats?.loans?.count },
-                      { label: 'Paid', count: stats?.loans?.paid, color: 'bg-blue-500', total: stats?.loans?.count },
+                      { label: 'Paid', count: stats?.loans?.paid, color: 'bg-emerald-500', total: stats?.loans?.count },
                     ].map((item) => (
                       <div key={item.label} className="space-y-2">
-                        <div className="flex justify-between text-sm">
-                          <span className="font-semibold text-slate-600">{item.label}</span>
-                          <span className="font-bold text-slate-900">{item.count}</span>
+                        <div className="flex justify-between text-xs font-bold uppercase tracking-wider text-slate-500">
+                          <span>{item.label}</span>
+                          <span className="text-slate-900">{item.count}</span>
                         </div>
                         <div className="h-2 w-full bg-slate-100 rounded-full overflow-hidden">
                           <div 

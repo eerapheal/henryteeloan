@@ -28,7 +28,6 @@ interface ApplicationData {
   guarantorName: string;
   guarantorEmail: string;
   guarantorPhone: string;
-  guarantorNin: string;
   applicationId: string;
   agreementDate: string;
 }
@@ -116,7 +115,6 @@ export async function sendAdminNotification(data: ApplicationData) {
               <tr><td style="padding: 8px 0; border-bottom: 1px solid #f1f5f9; color: #64748b; width: 40%;">Name</td><td style="padding: 8px 0; border-bottom: 1px solid #f1f5f9; font-weight: 600;">${data.guarantorName}</td></tr>
               <tr><td style="padding: 8px 0; border-bottom: 1px solid #f1f5f9; color: #64748b;">Phone</td><td style="padding: 8px 0; border-bottom: 1px solid #f1f5f9; font-weight: 600;">${data.guarantorPhone}</td></tr>
               <tr><td style="padding: 8px 0; border-bottom: 1px solid #f1f5f9; color: #64748b;">Email</td><td style="padding: 8px 0; border-bottom: 1px solid #f1f5f9; font-weight: 600;">${data.guarantorEmail}</td></tr>
-              <tr><td style="padding: 8px 0; color: #64748b;">NIN</td><td style="padding: 8px 0; font-weight: 600;">${data.guarantorNin}</td></tr>
             </table>
           </div>
           
