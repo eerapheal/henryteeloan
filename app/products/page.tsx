@@ -72,14 +72,23 @@ export default function ProductsPage() {
       <section className="py-24 bg-navy-gradient relative overflow-hidden">
         <div className="absolute top-0 right-0 -mr-20 -mt-20 w-[500px] h-[500px] bg-[#C8992C]/15 rounded-full blur-[120px] opacity-60 pointer-events-none"></div>
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="text-center max-w-3xl mx-auto animate-fadeInUp">
-            <div className="inline-block px-4 py-2 bg-white/10 backdrop-blur-sm border border-white/15 rounded-full text-sm font-semibold text-[#E8A838] mb-6">
-              ✦ Fast & Reliable Funding
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div className="animate-fadeInLeft text-center lg:text-left">
+              <div className="inline-block px-4 py-2 bg-white/10 backdrop-blur-sm border border-white/15 rounded-full text-sm font-semibold text-[#E8A838] mb-6">
+                ✦ Fast & Reliable Funding
+              </div>
+              <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 leading-tight">Our Loan <span className="text-gradient-gold">Products</span></h1>
+              <p className="text-lg text-slate-300 leading-relaxed max-w-2xl mx-auto lg:mx-0">
+                Tailored personal financing solutions for Nigerians. Whether it's a planned project or an unexpected emergency, Henrytee Loans has your back.
+              </p>
             </div>
-            <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">Our Loan <span className="text-gradient-gold">Products</span></h1>
-            <p className="text-lg text-slate-300 leading-relaxed">
-              Tailored personal financing solutions for Nigerians. Whether it's a planned project or an unexpected emergency, Henrytee Loans has your back.
-            </p>
+            <div className="animate-fadeInRight">
+              <img 
+                src="/hero-business.jpg" 
+                alt="Nigerian business professionals" 
+                className="w-full h-auto rounded-2xl shadow-2xl animate-float border border-white/10"
+              />
+            </div>
           </div>
         </div>
       </section>

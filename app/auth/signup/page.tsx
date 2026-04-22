@@ -100,9 +100,9 @@ export default function SignUp() {
             
             <form onSubmit={handleSubmit} className="space-y-5">
               <div className="space-y-2">
-                <Label htmlFor="username" className="text-xs font-bold text-[#5A6577] uppercase tracking-wider ml-1">Username</Label>
+                <Label htmlFor="username" className="text-xs font-bold text-slate-500 uppercase tracking-wider ml-1">Username</Label>
                 <div className="relative group">
-                  <User className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#5A6577] group-focus-within:text-[#0F2B46] transition-colors" />
+                  <User className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500 group-focus-within:text-[#0F2B46] transition-colors" />
                   <Input 
                     id="username" 
                     type="text" 
@@ -115,9 +115,9 @@ export default function SignUp() {
                 </div>
               </div>
               <div className="space-y-2">
-                <Label htmlFor="email" className="text-xs font-bold text-[#5A6577] uppercase tracking-wider ml-1">Email Address</label>
+                <Label htmlFor="email" className="text-xs font-bold text-slate-500 uppercase tracking-wider ml-1">Email Address</Label>
                 <div className="relative group">
-                  <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#5A6577] group-focus-within:text-[#0F2B46] transition-colors" />
+                  <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500 group-focus-within:text-[#0F2B46] transition-colors" />
                   <Input 
                     id="email" 
                     type="email" 
@@ -130,9 +130,9 @@ export default function SignUp() {
                 </div>
               </div>
               <div className="space-y-2">
-                <Label htmlFor="password" className="text-xs font-bold text-[#5A6577] uppercase tracking-wider ml-1">Password</Label>
+                <Label htmlFor="password" className="text-xs font-bold text-slate-500 uppercase tracking-wider ml-1">Password</Label>
                 <div className="relative group">
-                  <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#5A6577] group-focus-within:text-[#0F2B46] transition-colors" />
+                  <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500 group-focus-within:text-[#0F2B46] transition-colors" />
                   <Input 
                     id="password" 
                     type="password" 
@@ -162,7 +162,7 @@ export default function SignUp() {
             </form>
 
             <div className="mt-8 pt-8 border-t border-[#E4E7EC] text-center">
-              <p className="text-sm text-[#5A6577] font-medium">
+              <p className="text-sm text-slate-500 font-medium">
                 Already have an account?{" "}
                 <Link href="/auth/signin" className="text-[#0F2B46] font-bold hover:text-[#C8992C] transition-colors ml-1 underline underline-offset-4">
                   Sign In

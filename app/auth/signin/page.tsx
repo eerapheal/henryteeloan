@@ -93,14 +93,14 @@ export default function SignIn() {
           <div className="w-full md:w-1/2 p-10 md:p-16 flex flex-col justify-center bg-white">
             <div className="mb-10">
               <h1 className="text-2xl font-bold text-[#1A2332] mb-2">Welcome Back</h1>
-              <p className="text-[#5A6577] text-sm font-medium">Please enter your credentials to login</p>
+              <p className="text-slate-500 text-sm font-medium">Please enter your credentials to login</p>
             </div>
             
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="space-y-2">
-                <Label htmlFor="email" className="text-xs font-bold text-[#5A6577] uppercase tracking-wider ml-1">Email Address</Label>
+                <Label htmlFor="email" className="text-xs font-bold text-slate-500 uppercase tracking-wider ml-1">Email Address</Label>
                 <div className="relative group">
-                  <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#5A6577] group-focus-within:text-[#0F2B46] transition-colors" />
+                  <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500 group-focus-within:text-[#0F2B46] transition-colors" />
                   <Input 
                     id="email" 
                     type="email" 
@@ -113,9 +113,9 @@ export default function SignIn() {
                 </div>
               </div>
               <div className="space-y-2">
-                <Label htmlFor="password" className="text-xs font-bold text-[#5A6577] uppercase tracking-wider ml-1">Password</Label>
+                <Label htmlFor="password" className="text-xs font-bold text-slate-500 uppercase tracking-wider ml-1">Password</Label>
                 <div className="relative group">
-                  <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#5A6577] group-focus-within:text-[#0F2B46] transition-colors" />
+                  <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500 group-focus-within:text-[#0F2B46] transition-colors" />
                   <Input 
                     id="password" 
                     type="password" 
@@ -147,7 +147,7 @@ export default function SignIn() {
             </form>
 
             <div className="mt-10 pt-10 border-t border-[#E4E7EC] text-center">
-              <p className="text-sm text-[#5A6577] font-medium">
+              <p className="text-sm text-slate-500 font-medium">
                 Don't have an admin account?{" "}
                 <Link href="/auth/signup" className="text-[#0F2B46] font-bold hover:text-[#C8992C] transition-colors ml-1 underline underline-offset-4">
                   Request Access

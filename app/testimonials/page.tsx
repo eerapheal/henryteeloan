@@ -65,16 +65,27 @@ export default function TestimonialsPage() {
       <Header />
 
       {/* Hero Section */}
-      <section className="py-24 bg-navy-gradient text-white relative overflow-hidden text-center">
+      <section className="py-24 bg-navy-gradient text-white relative overflow-hidden">
         <div className="absolute top-0 right-0 -mr-20 -mt-20 w-[500px] h-[500px] bg-[#C8992C]/15 rounded-full blur-[120px] opacity-60 pointer-events-none"></div>
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="inline-block px-4 py-2 bg-white/10 backdrop-blur-sm border border-white/15 rounded-full text-sm font-semibold text-[#E8A838] mb-6">
-            ✦ Success Stories
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div className="animate-fadeInLeft text-center lg:text-left">
+              <div className="inline-block px-4 py-2 bg-white/10 backdrop-blur-sm border border-white/15 rounded-full text-sm font-semibold text-[#E8A838] mb-6">
+                ✦ Success Stories
+              </div>
+              <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">Voices of <span className="text-gradient-gold">Success</span></h1>
+              <p className="text-lg text-slate-300 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+                Thousands of Nigerians rely on Henrytee Loans for fast, reliable, and transparent personal financing. Here are some of their stories.
+              </p>
+            </div>
+            <div className="animate-fadeInRight">
+              <img 
+                src="/testimonials-happy-customers.jpg" 
+                alt="Happy Nigerian customers" 
+                className="w-full h-auto rounded-2xl shadow-2xl animate-float border border-white/10"
+              />
+            </div>
           </div>
-          <h1 className="text-4xl md:text-6xl font-bold mb-6">Voices of <span className="text-gradient-gold">Success</span></h1>
-          <p className="text-lg text-slate-300 max-w-2xl mx-auto leading-relaxed">
-            Thousands of Nigerians rely on Henrytee Loans for fast, reliable, and transparent personal financing. Here are some of their stories.
-          </p>
         </div>
       </section>
 

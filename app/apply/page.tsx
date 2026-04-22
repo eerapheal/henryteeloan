@@ -149,14 +149,25 @@ export default function ApplyPage() {
       {/* Hero Header */}
       <section className="py-24 bg-navy-gradient text-white relative overflow-hidden">
         <div className="absolute top-0 right-0 -mr-20 -mt-20 w-[500px] h-[500px] bg-[#C8992C]/15 rounded-full blur-[120px] opacity-60 pointer-events-none"></div>
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-          <div className="inline-block px-4 py-2 bg-white/10 backdrop-blur-sm border border-white/15 rounded-full text-sm font-semibold text-[#E8A838] mb-6 animate-fadeInUp">
-            ✦ Secure Application
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div className="animate-fadeInLeft text-center lg:text-left">
+              <div className="inline-block px-4 py-2 bg-white/10 backdrop-blur-sm border border-white/15 rounded-full text-sm font-semibold text-[#E8A838] mb-6">
+                ✦ Secure Application
+              </div>
+              <h1 className="text-4xl md:text-5xl font-bold mb-6 tracking-tight">Loan <span className="text-gradient-gold">Agreement</span></h1>
+              <p className="text-slate-300 max-w-2xl mx-auto lg:mx-0 text-lg font-light leading-relaxed">
+                Please fill out the form below to complete your loan application. This is a binding agreement between you and Henrytee Loans.
+              </p>
+            </div>
+            <div className="animate-fadeInRight">
+              <img 
+                src="/products-showcase.jpg" 
+                alt="Henrytee Loans Professional Office" 
+                className="w-full h-auto rounded-2xl shadow-2xl animate-float border border-white/10"
+              />
+            </div>
           </div>
-          <h1 className="text-4xl md:text-5xl font-bold mb-6 tracking-tight animate-fadeInUp">Loan <span className="text-gradient-gold">Agreement</span></h1>
-          <p className="text-slate-300 max-w-2xl mx-auto text-lg font-light animate-fadeInUp" style={{ animationDelay: '0.1s' }}>
-            Please fill out the form below to complete your loan application. This is a binding agreement between you and Henrytee Loans.
-          </p>
         </div>
       </section>
 

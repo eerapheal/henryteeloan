@@ -32,8 +32,8 @@ export default function HowItWorksPage() {
               <div className="relative group">
                 <div className="absolute -inset-4 bg-[#C8992C]/10 blur-3xl rounded-full animate-pulse"></div>
                 <img 
-                  src="/agreement-illustration.png" 
-                  alt="Loan process illustration" 
+                  src="/how-it-works-process.jpg" 
+                  alt="Loan process in action" 
                   className="w-full max-w-md h-auto rounded-3xl shadow-2xl relative z-10 animate-float border border-white/10"
                 />
               </div>
