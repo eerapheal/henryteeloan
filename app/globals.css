@@ -4,39 +4,39 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  --background: #fdfdfd;
-  --foreground: #013220;
+  --background: #FAFBFC;
+  --foreground: #1A2332;
   --card: #ffffff;
-  --card-foreground: #013220;
+  --card-foreground: #1A2332;
   --popover: #ffffff;
-  --popover-foreground: #013220;
-  --primary: #006633;
+  --popover-foreground: #1A2332;
+  --primary: #0F2B46;
   --primary-foreground: #ffffff;
-  --secondary: #f0f4f0;
-  --secondary-foreground: #006633;
-  --muted: #f0f4f0;
-  --muted-foreground: #4a5d4a;
-  --accent: #c5a059;
+  --secondary: #F0F2F5;
+  --secondary-foreground: #0F2B46;
+  --muted: #F0F2F5;
+  --muted-foreground: #5A6577;
+  --accent: #C8992C;
   --accent-foreground: #ffffff;
   --destructive: #ef4444;
   --destructive-foreground: #f8fafc;
-  --border: #e2e8f0;
-  --input: #e2e8f0;
-  --ring: #006633;
-  --chart-1: #006633;
-  --chart-2: #c5a059;
-  --chart-3: #013220;
-  --chart-4: #fcd34d;
+  --border: #E4E7EC;
+  --input: #E4E7EC;
+  --ring: #0F2B46;
+  --chart-1: #0F2B46;
+  --chart-2: #C8992C;
+  --chart-3: #1A3A5C;
+  --chart-4: #E8A838;
   --chart-5: #334155;
-  --radius: 1rem;
+  --radius: 0.75rem;
   --sidebar: #f8fafc;
-  --sidebar-foreground: #013220;
-  --sidebar-primary: #006633;
+  --sidebar-foreground: #1A2332;
+  --sidebar-primary: #0F2B46;
   --sidebar-primary-foreground: #ffffff;
   --sidebar-accent: #f1f5f9;
-  --sidebar-accent-foreground: #006633;
-  --sidebar-border: #e2e8f0;
-  --sidebar-ring: #006633;
+  --sidebar-accent-foreground: #0F2B46;
+  --sidebar-border: #E4E7EC;
+  --sidebar-ring: #0F2B46;
 }
 
 .dark {
@@ -46,32 +46,32 @@
   --card-foreground: #f8fafc;
   --popover: #0f172a;
   --popover-foreground: #f8fafc;
-  --primary: #d4af37;
+  --primary: #C8992C;
   --primary-foreground: #0a192f;
   --secondary: #1e293b;
   --secondary-foreground: #f8fafc;
   --muted: #1e293b;
   --muted-foreground: #94a3b8;
-  --accent: #d4af37;
+  --accent: #E8A838;
   --accent-foreground: #0a192f;
   --destructive: #7f1d1d;
   --destructive-foreground: #f8fafc;
   --border: #1e293b;
   --input: #1e293b;
-  --ring: #d4af37;
-  --chart-1: #d4af37;
+  --ring: #C8992C;
+  --chart-1: #C8992C;
   --chart-2: #0a192f;
-  --chart-3: #fcd34d;
+  --chart-3: #E8A838;
   --chart-4: #1e293b;
   --chart-5: #334155;
   --sidebar: #020617;
   --sidebar-foreground: #f8fafc;
-  --sidebar-primary: #d4af37;
+  --sidebar-primary: #C8992C;
   --sidebar-primary-foreground: #0f172a;
   --sidebar-accent: #1e293b;
   --sidebar-accent-foreground: #f8fafc;
   --sidebar-border: #1e293b;
-  --sidebar-ring: #d4af37;
+  --sidebar-ring: #C8992C;
 }
 
 @theme inline {
@@ -120,6 +120,35 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@layer utilities {
+  .glass {
+    @apply bg-white/70 backdrop-blur-md border border-white/20 shadow-[0_8px_30px_rgb(0,0,0,0.04)];
+  }
+  .glass-dark {
+    @apply bg-slate-900/80 backdrop-blur-lg border border-slate-700/50 shadow-[0_8px_30px_rgb(0,0,0,0.12)];
+  }
+  .shadow-soft {
+    box-shadow: 0 20px 40px -15px rgba(15, 43, 70, 0.10);
+  }
+  .shadow-glow {
+    box-shadow: 0 0 24px 0 rgba(200, 153, 44, 0.25);
+  }
+  .mesh-bg {
+    background-color: #0F2B46;
+    background-image: radial-gradient(at 0% 0%, hsla(210, 60%, 18%, 1) 0px, transparent 50%),
+                      radial-gradient(at 100% 100%, hsla(40, 60%, 45%, 0.2) 0px, transparent 50%);
+  }
+  .bg-navy-gradient {
+    background: linear-gradient(135deg, #0A1E33 0%, #0F2B46 40%, #163A5C 100%);
+  }
+  .text-gradient-gold {
+    background: linear-gradient(135deg, #C8992C, #E8A838);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 }
 
@@ -181,10 +210,10 @@
 
   @keyframes pulse-glow {
     0%, 100% {
-      box-shadow: 0 0 0 0 rgba(0, 102, 51, 0.4);
+      box-shadow: 0 0 0 0 rgba(200, 153, 44, 0.4);
     }
     50% {
-      box-shadow: 0 0 0 15px rgba(0, 102, 51, 0);
+      box-shadow: 0 0 0 15px rgba(200, 153, 44, 0);
     }
   }
 
@@ -205,6 +234,15 @@
     to {
       transform: translateY(0);
       opacity: 1;
+    }
+  }
+
+  @keyframes shimmer {
+    0% {
+      background-position: -200% 0;
+    }
+    100% {
+      background-position: 200% 0;
     }
   }
 
@@ -238,5 +276,11 @@
 
   .animate-slideDown {
     animation: slideDown 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .animate-shimmer {
+    background: linear-gradient(90deg, transparent, rgba(200, 153, 44, 0.08), transparent);
+    background-size: 200% 100%;
+    animation: shimmer 3s infinite;
   }
 }

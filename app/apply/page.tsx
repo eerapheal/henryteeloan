@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { CheckCircle, AlertCircle, Loader2, FileText, Info } from 'lucide-react';
+import { CheckCircle, AlertCircle, Loader2, FileText, Info, ShieldCheck } from 'lucide-react';
 import Header from '@/components/header';
 import Footer from '@/components/footer';
 import { toast } from 'sonner';
@@ -113,7 +113,7 @@ export default function ApplyPage() {
         loanAmount: '',
         previousLoan: '',
         totalLoan: '',
-        interestRate: '20%',
+        interestRate: `${settings.interestRate}%`,
         fullName: '',
         phone: '',
         email: '',
@@ -143,32 +143,35 @@ export default function ApplyPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#F8FAF8] flex flex-col overflow-x-hidden">
+    <div className="min-h-screen bg-background flex flex-col overflow-x-hidden">
       <Header />
 
       {/* Hero Header */}
-      <section className="py-12 bg-primary text-white relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-accent/10 rounded-full blur-3xl -mr-32 -mt-32"></div>
+      <section className="py-24 bg-navy-gradient text-white relative overflow-hidden">
+        <div className="absolute top-0 right-0 -mr-20 -mt-20 w-[500px] h-[500px] bg-[#C8992C]/15 rounded-full blur-[120px] opacity-60 pointer-events-none"></div>
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-          <h1 className="text-3xl md:text-5xl font-bold mb-4">Loan Agreement</h1>
-          <p className="text-slate-300 max-w-2xl mx-auto">
+          <div className="inline-block px-4 py-2 bg-white/10 backdrop-blur-sm border border-white/15 rounded-full text-sm font-semibold text-[#E8A838] mb-6 animate-fadeInUp">
+            ✦ Secure Application
+          </div>
+          <h1 className="text-4xl md:text-5xl font-bold mb-6 tracking-tight animate-fadeInUp">Loan <span className="text-gradient-gold">Agreement</span></h1>
+          <p className="text-slate-300 max-w-2xl mx-auto text-lg font-light animate-fadeInUp" style={{ animationDelay: '0.1s' }}>
             Please fill out the form below to complete your loan application. This is a binding agreement between you and Henrytee Loans.
           </p>
         </div>
       </section>
 
-      <section className="py-16 relative">
+      <section className="py-16 relative bg-[#FAFBFC]">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
           {success && (
-            <Card className="mb-8 p-6 border-green-200 bg-green-50 shadow-lg animate-fadeInUp">
+            <Card className="mb-12 p-8 border-emerald-200 bg-emerald-50 shadow-soft animate-fadeInUp">
               <div className="flex gap-4 items-start">
-                <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
-                  <CheckCircle className="w-6 h-6 text-green-600" />
+                <div className="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center flex-shrink-0">
+                  <CheckCircle className="w-7 h-7 text-emerald-600" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-green-900 text-lg mb-1">Agreement Submitted Successfully!</h3>
-                  <p className="text-green-800">
-                    Your application is being reviewed. We will contact you via phone shortly.
+                  <h3 className="font-bold text-emerald-900 text-xl mb-1">Agreement Submitted Successfully!</h3>
+                  <p className="text-emerald-800 text-sm">
+                    Your application is being reviewed by our underwriting team. We will contact you via phone shortly to finalize disbursement.
                   </p>
                 </div>
               </div>
@@ -176,36 +179,36 @@ export default function ApplyPage() {
           )}
 
           {error && (
-            <Card className="mb-8 p-6 border-red-200 bg-red-50 shadow-lg animate-fadeInUp">
+            <Card className="mb-12 p-8 border-red-200 bg-red-50 shadow-soft animate-fadeInUp">
               <div className="flex gap-4 items-start">
-                <div className="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center flex-shrink-0">
-                  <AlertCircle className="w-6 h-6 text-red-600" />
+                <div className="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center flex-shrink-0">
+                  <AlertCircle className="w-7 h-7 text-red-600" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-red-900 text-lg mb-1">Submission Error</h3>
-                  <p className="text-red-800">{error}</p>
+                  <h3 className="font-bold text-red-900 text-xl mb-1">Submission Error</h3>
+                  <p className="text-red-800 text-sm">{error}</p>
                 </div>
               </div>
             </Card>
           )}
 
-          <Card className="p-8 md:p-12 border border-slate-200 shadow-xl bg-white rounded-2xl animate-fadeInUp relative">
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-accent text-white px-6 py-2 rounded-full font-bold shadow-lg flex items-center gap-2">
-              <FileText className="w-4 h-4" />
-              OFFICIAL FORM
+          <Card className="p-10 md:p-16 border border-[#E4E7EC] shadow-soft bg-white rounded-3xl animate-fadeInUp relative z-20 -mt-16">
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#0F2B46] text-white px-8 py-3 rounded-full font-bold shadow-lg flex items-center gap-2 border border-[#C8992C]/30 text-sm tracking-wider">
+              <ShieldCheck className="w-4 h-4 text-[#C8992C]" />
+              OFFICIAL SECURE FORM
             </div>
 
-            <form onSubmit={handleSubmit} className="space-y-10">
+            <form onSubmit={handleSubmit} className="space-y-12">
               {/* Agreement Header Section */}
-              <div className="space-y-6 text-slate-800 italic border-b border-slate-100 pb-8">
-                <div className="flex flex-wrap items-center gap-2 leading-loose">
+              <div className="space-y-8 text-[#1A2332] italic border-b border-[#E4E7EC] pb-10">
+                <div className="flex flex-wrap items-center gap-3 leading-relaxed text-lg">
                   This loan agreement is made on this 
                   <input 
                     type="text" 
                     name="agreementDay" 
                     value={formData.agreementDay} 
                     onChange={handleChange}
-                    className="w-12 border-b border-slate-400 focus:border-primary outline-none text-center bg-transparent font-bold not-italic"
+                    className="w-14 border-b-2 border-[#C8992C]/40 focus:border-[#0F2B46] outline-none text-center bg-transparent font-bold not-italic text-[#0F2B46] transition-colors"
                     placeholder="---"
                   /> 
                   day of 
@@ -214,7 +217,7 @@ export default function ApplyPage() {
                     name="agreementMonth" 
                     value={formData.agreementMonth} 
                     onChange={handleChange}
-                    className="w-32 border-b border-slate-400 focus:border-primary outline-none text-center bg-transparent font-bold not-italic"
+                    className="w-36 border-b-2 border-[#C8992C]/40 focus:border-[#0F2B46] outline-none text-center bg-transparent font-bold not-italic text-[#0F2B46] transition-colors"
                     placeholder="-----------"
                   /> 
                   20
@@ -223,194 +226,200 @@ export default function ApplyPage() {
                     name="agreementYear" 
                     value={formData.agreementYear} 
                     onChange={handleChange}
-                    className="w-10 border-b border-slate-400 focus:border-primary outline-none text-center bg-transparent font-bold not-italic"
+                    className="w-12 border-b-2 border-[#C8992C]/40 focus:border-[#0F2B46] outline-none text-center bg-transparent font-bold not-italic text-[#0F2B46] transition-colors"
                     placeholder="---"
                   />
-                  between <strong>Ekpenisi Henry Happiness</strong> and 
+                  between <strong className="not-italic text-[#0F2B46]">Ekpenisi Henry Happiness</strong> and 
                   <input 
                     type="text" 
                     name="borrowerName" 
                     value={formData.borrowerName} 
                     onChange={handleChange}
-                    className="flex-grow min-w-[200px] border-b border-slate-400 focus:border-primary outline-none px-2 bg-transparent font-bold not-italic"
+                    className="flex-grow min-w-[250px] border-b-2 border-[#C8992C]/40 focus:border-[#0F2B46] outline-none px-2 bg-transparent font-bold not-italic text-[#0F2B46] transition-colors"
                     placeholder="Enter Borrower Full Name"
                     required
                   />
                 </div>
                 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-4">
-                  <div className="space-y-4">
-                    <div className="flex items-center gap-2">
-                      <span className="shrink-0 font-semibold not-italic">Loan amount:</span>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-10 pt-4">
+                  <div className="space-y-5">
+                    <div className="flex items-center gap-3">
+                      <span className="shrink-0 font-bold not-italic text-sm text-[#5A6577] uppercase tracking-wide w-32">Loan amount:</span>
                       <div className="relative flex-grow">
-                        <span className="absolute left-0 top-1/2 -translate-y-1/2 font-bold not-italic">₦</span>
+                        <span className="absolute left-0 top-1/2 -translate-y-1/2 font-bold not-italic text-[#0F2B46]">₦</span>
                         <input 
                           type="number" 
                           name="loanAmount" 
                           value={formData.loanAmount} 
                           onChange={handleChange}
-                          className="w-full border-b border-slate-400 focus:border-primary outline-none pl-6 bg-transparent font-bold not-italic"
+                          className="w-full border-b-2 border-[#C8992C]/30 focus:border-[#0F2B46] outline-none pl-6 bg-transparent font-bold not-italic text-[#0F2B46] text-xl pb-1 transition-colors"
                           placeholder="0.00"
                           required
                         />
                       </div>
                     </div>
-                    <div className="flex items-center gap-2">
-                      <span className="shrink-0 font-semibold not-italic">Previous loan:</span>
+                    <div className="flex items-center gap-3">
+                      <span className="shrink-0 font-bold not-italic text-sm text-[#5A6577] uppercase tracking-wide w-32">Previous loan:</span>
                       <div className="relative flex-grow">
-                        <span className="absolute left-0 top-1/2 -translate-y-1/2 font-bold not-italic">₦</span>
+                        <span className="absolute left-0 top-1/2 -translate-y-1/2 font-bold not-italic text-[#0F2B46]">₦</span>
                         <input 
                           type="number" 
                           name="previousLoan" 
                           value={formData.previousLoan} 
                           onChange={handleChange}
-                          className="w-full border-b border-slate-400 focus:border-primary outline-none pl-6 bg-transparent font-bold not-italic"
+                          className="w-full border-b-2 border-[#C8992C]/30 focus:border-[#0F2B46] outline-none pl-6 bg-transparent font-bold not-italic text-[#0F2B46] text-xl pb-1 transition-colors"
                           placeholder="0.00"
                         />
                       </div>
                     </div>
                   </div>
-                  <div className="space-y-4">
-                    <div className="flex items-center gap-2">
-                      <span className="shrink-0 font-semibold not-italic">Total loan:</span>
+                  <div className="space-y-5">
+                    <div className="flex items-center gap-3">
+                      <span className="shrink-0 font-bold not-italic text-sm text-[#5A6577] uppercase tracking-wide w-32">Total loan:</span>
                       <div className="relative flex-grow">
-                        <span className="absolute left-0 top-1/2 -translate-y-1/2 font-bold not-italic">₦</span>
+                        <span className="absolute left-0 top-1/2 -translate-y-1/2 font-bold not-italic text-[#0F2B46]">₦</span>
                         <input 
                           type="number" 
                           name="totalLoan" 
                           value={formData.totalLoan} 
                           onChange={handleChange}
-                          className="w-full border-b border-slate-400 focus:border-primary outline-none pl-6 bg-transparent font-bold not-italic"
+                          className="w-full border-b-2 border-[#C8992C]/30 focus:border-[#0F2B46] outline-none pl-6 bg-transparent font-bold not-italic text-[#0F2B46] text-xl pb-1 transition-colors"
                           placeholder="0.00"
                           required
                         />
                       </div>
                     </div>
-                    <div className="flex items-center gap-2">
-                      <span className="shrink-0 font-semibold not-italic">Interest rate @</span>
-                      <input 
-                        type="text" 
-                        name="interestRate" 
-                        value={formData.interestRate} 
-                        readOnly
-                        className="w-16 border-b border-slate-400 outline-none text-center bg-transparent font-bold not-italic text-primary"
-                      />
-                      <span className="font-semibold not-italic">monthly</span>
+                    <div className="flex items-center gap-3">
+                      <span className="shrink-0 font-bold not-italic text-sm text-[#5A6577] uppercase tracking-wide w-32">Interest rate:</span>
+                      <div className="flex items-center gap-2">
+                        <input 
+                          type="text" 
+                          name="interestRate" 
+                          value={formData.interestRate} 
+                          readOnly
+                          className="w-16 border-b-2 border-[#C8992C]/20 outline-none text-center bg-transparent font-bold not-italic text-[#C8992C] text-xl"
+                        />
+                        <span className="font-bold not-italic text-[#5A6577] text-sm uppercase tracking-wide">monthly</span>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
 
               {/* Loan Requirements Section */}
-              <div className="space-y-6">
-                <div className="flex items-center gap-2 text-primary">
-                  <Info className="w-5 h-5" />
-                  <h3 className="text-xl font-bold uppercase tracking-wide">Loan Requirements</h3>
+              <div className="space-y-8">
+                <div className="flex items-center gap-3 text-[#0F2B46]">
+                  <div className="w-10 h-10 bg-[#0F2B46]/5 rounded-xl flex items-center justify-center">
+                    <Info className="w-5 h-5 text-[#C8992C]" />
+                  </div>
+                  <h3 className="text-xl font-bold uppercase tracking-wider">Loan Requirements</h3>
                 </div>
                 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   <div className="space-y-2">
-                    <label className="text-sm font-bold text-slate-500 uppercase tracking-tight">Full Name</label>
+                    <label className="text-[10px] font-bold text-[#5A6577] uppercase tracking-widest ml-1">Full Name</label>
                     <input 
                       type="text" 
                       name="fullName" 
                       value={formData.fullName} 
                       onChange={handleChange}
-                      className="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary focus:bg-white outline-none transition-all font-medium"
+                      className="w-full p-4 bg-[#FAFBFC] border border-[#E4E7EC] rounded-xl focus:ring-2 focus:ring-[#0F2B46] focus:bg-white outline-none transition-all font-medium text-[#1A2332]"
                       placeholder="Enter your full name"
                       required
                     />
                   </div>
                   <div className="space-y-2">
-                    <label className="text-sm font-bold text-slate-500 uppercase tracking-tight">Phone Number</label>
+                    <label className="text-[10px] font-bold text-[#5A6577] uppercase tracking-widest ml-1">Phone Number</label>
                     <input 
                       type="tel" 
                       name="phone" 
                       value={formData.phone} 
                       onChange={handleChange}
-                      className="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary focus:bg-white outline-none transition-all font-medium"
+                      className="w-full p-4 bg-[#FAFBFC] border border-[#E4E7EC] rounded-xl focus:ring-2 focus:ring-[#0F2B46] focus:bg-white outline-none transition-all font-medium text-[#1A2332]"
                       placeholder="e.g. 0800 000 0000"
                       required
                     />
                   </div>
                   <div className="space-y-2">
-                    <label className="text-sm font-bold text-slate-500 uppercase tracking-tight">Email Address</label>
+                    <label className="text-[10px] font-bold text-[#5A6577] uppercase tracking-widest ml-1">Email Address</label>
                     <input 
                       type="email" 
                       name="email" 
                       value={formData.email} 
                       onChange={handleChange}
-                      className="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary focus:bg-white outline-none transition-all font-medium"
+                      className="w-full p-4 bg-[#FAFBFC] border border-[#E4E7EC] rounded-xl focus:ring-2 focus:ring-[#0F2B46] focus:bg-white outline-none transition-all font-medium text-[#1A2332]"
                       placeholder="your@email.com"
                       required
                     />
                   </div>
                   <div className="space-y-2">
-                    <label className="text-sm font-bold text-slate-500 uppercase tracking-tight">NIN (National ID Number)</label>
+                    <label className="text-[10px] font-bold text-[#5A6577] uppercase tracking-widest ml-1">NIN (National ID Number)</label>
                     <input 
                       type="text" 
                       name="nin" 
                       value={formData.nin} 
                       onChange={handleChange}
-                      className="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary focus:bg-white outline-none transition-all font-medium"
+                      className="w-full p-4 bg-[#FAFBFC] border border-[#E4E7EC] rounded-xl focus:ring-2 focus:ring-[#0F2B46] focus:bg-white outline-none transition-all font-medium text-[#1A2332]"
                       placeholder="11-digit NIN number"
                       required
                       maxLength={11}
                     />
                   </div>
                   <div className="space-y-2">
-                    <label className="text-sm font-bold text-slate-500 uppercase tracking-tight">Upload Copy of NIN (Borrower Only)</label>
-                    <input 
-                      type="file" 
-                      name="ninCopy" 
-                      onChange={(e) => setFormData(prev => ({ ...prev, ninCopy: e.target.files?.[0] || null }))}
-                      className="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary outline-none font-medium text-sm file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20"
-                      accept="image/*,.pdf"
-                      required
-                    />
+                    <label className="text-[10px] font-bold text-[#5A6577] uppercase tracking-widest ml-1">Upload Copy of NIN (Borrower Only)</label>
+                    <div className="relative">
+                      <input 
+                        type="file" 
+                        name="ninCopy" 
+                        onChange={(e) => setFormData(prev => ({ ...prev, ninCopy: e.target.files?.[0] || null }))}
+                        className="w-full p-3 bg-[#FAFBFC] border border-[#E4E7EC] rounded-xl focus:ring-2 focus:ring-[#0F2B46] outline-none font-medium text-xs file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-[10px] file:font-bold file:bg-[#0F2B46]/10 file:text-[#0F2B46] hover:file:bg-[#0F2B46]/20 transition-all"
+                        accept="image/*,.pdf"
+                        required
+                      />
+                    </div>
                   </div>
                   <div className="space-y-2">
-                    <label className="text-sm font-bold text-slate-500 uppercase tracking-tight">Loan Duration</label>
+                    <label className="text-[10px] font-bold text-[#5A6577] uppercase tracking-widest ml-1">Loan Duration</label>
                     <input 
                       type="text" 
                       name="loanDuration" 
                       value={formData.loanDuration} 
                       onChange={handleChange}
-                      className="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary focus:bg-white outline-none transition-all font-medium"
+                      className="w-full p-4 bg-[#FAFBFC] border border-[#E4E7EC] rounded-xl focus:ring-2 focus:ring-[#0F2B46] focus:bg-white outline-none transition-all font-medium text-[#1A2332]"
                       placeholder="e.g. 3 Months"
                       required
                     />
                   </div>
                   <div className="md:col-span-2 space-y-2">
-                    <label className="text-sm font-bold text-slate-500 uppercase tracking-tight">Place of Work</label>
+                    <label className="text-[10px] font-bold text-[#5A6577] uppercase tracking-widest ml-1">Place of Work</label>
                     <input 
                       type="text" 
                       name="placeOfWork" 
                       value={formData.placeOfWork} 
                       onChange={handleChange}
-                      className="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary focus:bg-white outline-none transition-all font-medium"
+                      className="w-full p-4 bg-[#FAFBFC] border border-[#E4E7EC] rounded-xl focus:ring-2 focus:ring-[#0F2B46] focus:bg-white outline-none transition-all font-medium text-[#1A2332]"
                       placeholder="Company name and department"
                       required
                     />
                   </div>
                   <div className="md:col-span-2 space-y-2">
-                    <label className="text-sm font-bold text-slate-500 uppercase tracking-tight">Home Address</label>
+                    <label className="text-[10px] font-bold text-[#5A6577] uppercase tracking-widest ml-1">Home Address</label>
                     <textarea 
                       name="homeAddress" 
                       value={formData.homeAddress} 
                       onChange={handleChange}
-                      className="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary focus:bg-white outline-none transition-all font-medium min-h-[80px]"
+                      className="w-full p-4 bg-[#FAFBFC] border border-[#E4E7EC] rounded-xl focus:ring-2 focus:ring-[#0F2B46] focus:bg-white outline-none transition-all font-medium min-h-[100px] resize-none"
                       placeholder="Complete residential address"
                       required
                     />
                   </div>
                   <div className="md:col-span-2 space-y-2">
-                    <label className="text-sm font-bold text-slate-500 uppercase tracking-tight">Office Address</label>
+                    <label className="text-[10px] font-bold text-[#5A6577] uppercase tracking-widest ml-1">Office Address</label>
                     <textarea 
                       name="officeAddress" 
                       value={formData.officeAddress} 
                       onChange={handleChange}
-                      className="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary focus:bg-white outline-none transition-all font-medium min-h-[80px]"
+                      className="w-full p-4 bg-[#FAFBFC] border border-[#E4E7EC] rounded-xl focus:ring-2 focus:ring-[#0F2B46] focus:bg-white outline-none transition-all font-medium min-h-[100px] resize-none"
                       placeholder="Complete work/office address"
                       required
                     />
@@ -419,57 +428,60 @@ export default function ApplyPage() {
               </div>
 
               {/* Guarantor Section */}
-              <div className="space-y-6 pt-4">
-                <div className="flex items-center gap-2 text-primary">
-                  <h3 className="text-xl font-bold uppercase tracking-wide">Guarantor Information</h3>
+              <div className="space-y-8 pt-6">
+                <div className="flex items-center gap-3 text-[#0F2B46]">
+                  <div className="w-10 h-10 bg-[#0F2B46]/5 rounded-xl flex items-center justify-center">
+                    <ShieldCheck className="w-5 h-5 text-[#C8992C]" />
+                  </div>
+                  <h3 className="text-xl font-bold uppercase tracking-wider">Guarantor Information</h3>
                 </div>
                 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 bg-slate-50 p-6 rounded-2xl border border-slate-100">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 bg-[#FAFBFC] p-8 rounded-3xl border border-[#E4E7EC]">
                   <div className="space-y-2">
-                    <label className="text-xs font-bold text-slate-500 uppercase">Guarantor Name</label>
+                    <label className="text-[10px] font-bold text-[#5A6577] uppercase tracking-widest ml-1">Guarantor Name</label>
                     <input 
                       type="text" 
                       name="guarantorName" 
                       value={formData.guarantorName} 
                       onChange={handleChange}
-                      className="w-full p-2.5 bg-white border border-slate-200 rounded-lg focus:ring-2 focus:ring-primary outline-none font-medium text-sm"
+                      className="w-full p-3.5 bg-white border border-[#E4E7EC] rounded-xl focus:ring-2 focus:ring-[#0F2B46] outline-none font-semibold text-sm text-[#1A2332]"
                       placeholder="Full Name"
                       required
                     />
                   </div>
                   <div className="space-y-2">
-                    <label className="text-xs font-bold text-slate-500 uppercase">Phone Number</label>
+                    <label className="text-[10px] font-bold text-[#5A6577] uppercase tracking-widest ml-1">Phone Number</label>
                     <input 
                       type="tel" 
                       name="guarantorPhone" 
                       value={formData.guarantorPhone} 
                       onChange={handleChange}
-                      className="w-full p-2.5 bg-white border border-slate-200 rounded-lg focus:ring-2 focus:ring-primary outline-none font-medium text-sm"
+                      className="w-full p-3.5 bg-white border border-[#E4E7EC] rounded-xl focus:ring-2 focus:ring-[#0F2B46] outline-none font-semibold text-sm text-[#1A2332]"
                       placeholder="Phone Number"
                       required
                     />
                   </div>
                   <div className="space-y-2">
-                    <label className="text-xs font-bold text-slate-500 uppercase">Guarantor NIN</label>
+                    <label className="text-[10px] font-bold text-[#5A6577] uppercase tracking-widest ml-1">Guarantor NIN</label>
                     <input 
                       type="text" 
                       name="guarantorNin" 
                       value={formData.guarantorNin} 
                       onChange={handleChange}
-                      className="w-full p-2.5 bg-white border border-slate-200 rounded-lg focus:ring-2 focus:ring-primary outline-none font-medium text-sm"
+                      className="w-full p-3.5 bg-white border border-[#E4E7EC] rounded-xl focus:ring-2 focus:ring-[#0F2B46] outline-none font-semibold text-sm text-[#1A2332]"
                       placeholder="NIN Number"
                       required
                       maxLength={11}
                     />
                   </div>
                   <div className="md:col-span-3 space-y-2">
-                    <label className="text-xs font-bold text-slate-500 uppercase">Guarantor Email Address</label>
+                    <label className="text-[10px] font-bold text-[#5A6577] uppercase tracking-widest ml-1">Guarantor Email Address</label>
                     <input 
                       type="email" 
                       name="guarantorEmail" 
                       value={formData.guarantorEmail} 
                       onChange={handleChange}
-                      className="w-full p-2.5 bg-white border border-slate-200 rounded-lg focus:ring-2 focus:ring-primary outline-none font-medium text-sm"
+                      className="w-full p-3.5 bg-white border border-[#E4E7EC] rounded-xl focus:ring-2 focus:ring-[#0F2B46] outline-none font-semibold text-sm text-[#1A2332]"
                       placeholder="guarantor@email.com"
                       required
                     />
@@ -478,56 +490,62 @@ export default function ApplyPage() {
               </div>
 
               {/* Legal Note Section */}
-              <div className="bg-amber-50 border-l-4 border-amber-400 p-6 rounded-r-2xl space-y-3">
-                <div className="flex items-center gap-2 text-amber-700 font-bold">
+              <div className="bg-amber-50 border-l-4 border-[#C8992C] p-8 rounded-r-3xl space-y-4 shadow-sm">
+                <div className="flex items-center gap-2 text-[#C8992C] font-bold uppercase tracking-widest text-xs">
                   <AlertCircle className="w-5 h-5" />
-                  IMPORTANT NOTE
+                  Important Legal Note
                 </div>
-                <p className="text-sm text-amber-800 leading-relaxed italic">
-                  All interests are paid monthly and any default on the due date agreement, this form shall be submitted to the HR of your work place for deduction from your salary. You can also be reported to financial crime agencies such as EFCC and Police for forceful recovery of the loan.
+                <p className="text-sm text-amber-900 leading-relaxed italic font-medium">
+                  All interests are paid monthly and any default on the due date agreement, this form shall be submitted to the HR of your workplace for deduction from your salary. You can also be reported to financial crime agencies such as EFCC and Police for forceful recovery of the loan.
                 </p>
               </div>
 
-                <div className="flex items-start gap-3 bg-primary/5 p-4 rounded-xl border border-primary/10">
+                <div className="flex items-start gap-4 bg-[#0F2B46]/5 p-6 rounded-2xl border border-[#0F2B46]/10 cursor-pointer group transition-all hover:bg-[#0F2B46]/10">
                   <input 
                     type="checkbox" 
                     id="agreeToTerms"
                     name="agreeToTerms" 
                     checked={formData.agreeToTerms} 
                     onChange={handleChange}
-                    className="mt-1 w-5 h-5 accent-primary cursor-pointer"
+                    className="mt-1 w-6 h-6 rounded-md accent-[#0F2B46] cursor-pointer"
                     required
                   />
-                  <label htmlFor="agreeToTerms" className="text-sm text-slate-700 cursor-pointer">
-                    I, <strong>{formData.fullName || '[Name]'}</strong>, hereby confirm that all information provided is accurate and I agree to the terms of this loan agreement as stated above.
+                  <label htmlFor="agreeToTerms" className="text-sm text-[#1A2332] cursor-pointer font-medium leading-relaxed">
+                    I, <strong className="text-[#0F2B46]">{formData.fullName || '[Full Name]'}</strong>, hereby confirm that all information provided is accurate and I agree to the terms of this loan agreement as stated above. I understand this is a legally binding digital contract.
                   </label>
                 </div>
 
               {/* Submit Button */}
-              <div className="flex justify-center pt-4">
+              <div className="flex justify-center pt-8">
                 <Button 
                   type="submit" 
                   disabled={loading}
                   size="lg"
-                  className="bg-primary hover:bg-primary/90 text-white px-12 py-7 text-xl font-bold rounded-2xl shadow-xl shadow-primary/20 transition-all hover:scale-[1.02] active:scale-95 disabled:opacity-70"
+                  className="bg-[#0F2B46] hover:bg-[#0A1E33] text-white px-16 py-8 text-xl font-bold rounded-2xl shadow-xl shadow-[#0F2B46]/20 transition-all hover:scale-[1.02] active:scale-95 disabled:opacity-70 group overflow-hidden relative"
                 >
-                  {loading ? (
-                    <>
-                      <Loader2 className="w-6 h-6 animate-spin mr-2" />
-                      Processing Agreement...
-                    </>
-                  ) : (
-                    'Submit Binding Agreement'
-                  )}
+                  <span className="relative z-10 flex items-center">
+                    {loading ? (
+                      <>
+                        <Loader2 className="w-6 h-6 animate-spin mr-3" />
+                        Processing...
+                      </>
+                    ) : (
+                      <>
+                        <FileText className="w-6 h-6 mr-3 text-[#C8992C]" />
+                        Submit Binding Agreement
+                      </>
+                    )}
+                  </span>
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
                 </Button>
               </div>
             </form>
           </Card>
           
-          <div className="mt-8 text-center text-slate-400 text-xs uppercase tracking-widest flex items-center justify-center gap-4">
-            <span className="w-12 h-px bg-slate-200"></span>
+          <div className="mt-12 text-center text-[#5A6577] text-[10px] font-bold uppercase tracking-[0.2em] flex items-center justify-center gap-6">
+            <span className="w-16 h-px bg-[#E4E7EC]"></span>
             Henrytee Loans Official Document
-            <span className="w-12 h-px bg-slate-200"></span>
+            <span className="w-16 h-px bg-[#E4E7EC]"></span>
           </div>
         </div>
       </section>
