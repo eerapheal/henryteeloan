@@ -5,15 +5,15 @@ import path from "path";
 
 // ─── Color Palette ────────────────────────────────────────────────────────────
 const COLOR = {
-  green:       [0,  102,  51]  as [number, number, number],
-  greenLight:  [0,  140,  70]  as [number, number, number],
-  greenMuted:  [230, 245, 235] as [number, number, number],
-  charcoal:    [30,  30,  30]  as [number, number, number],
-  midGray:     [100, 100, 100] as [number, number, number],
-  lightGray:   [220, 220, 220] as [number, number, number],
-  paleGray:    [248, 248, 248] as [number, number, number],
-  white:       [255, 255, 255] as [number, number, number],
-  gold:        [180, 140,  20] as [number, number, number],
+  green: [0, 102, 51] as [number, number, number],
+  greenLight: [0, 140, 70] as [number, number, number],
+  greenMuted: [230, 245, 235] as [number, number, number],
+  charcoal: [30, 30, 30] as [number, number, number],
+  midGray: [100, 100, 100] as [number, number, number],
+  lightGray: [220, 220, 220] as [number, number, number],
+  paleGray: [248, 248, 248] as [number, number, number],
+  white: [255, 255, 255] as [number, number, number],
+  gold: [180, 140, 20] as [number, number, number],
 };
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
@@ -107,7 +107,7 @@ export async function generateLoanAgreementPDF(data: any): Promise<ArrayBuffer> 
       doc.addImage(logoBase64, "PNG", margin, 8, 42, 14);
       logoLoaded = true;
     }
-  } catch (_) {}
+  } catch (_) { }
 
   if (!logoLoaded) {
     doc.setFontSize(16);
@@ -241,7 +241,7 @@ export async function generateLoanAgreementPDF(data: any): Promise<ArrayBuffer> 
 
   // ── Section 3: Terms & Conditions ─────────────────────────────────────────
   y = sectionHeading(doc, "3.  Terms and Conditions", y, pageWidth, margin);
-
+  y += 4;
   const terms: [string, string][] = [
     [
       "3.1  Repayment Obligation",
@@ -273,13 +273,14 @@ export async function generateLoanAgreementPDF(data: any): Promise<ArrayBuffer> 
     doc.setFont("helvetica", "bold");
     setTextColor(doc, COLOR.green);
     doc.text(heading, margin + 3, y + 6);
-    y += 8;
+
+    // increase spacing between heading and body
+    y += 10; // was 8 → now more padding
 
     doc.setFont("helvetica", "normal");
     setTextColor(doc, COLOR.charcoal);
     const lines = doc.splitTextToSize(body, pageWidth - margin * 2 - 6);
     doc.text(lines, margin + 3, y);
-    y += lines.length * 5 + 6;
   });
 
   y += 4;

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { CheckCircle, AlertCircle, Loader2, FileText, Info, ShieldCheck } from 'lucide-react';
@@ -51,6 +51,24 @@ export default function ApplyPage() {
     const val = type === 'checkbox' ? (e.target as HTMLInputElement).checked : value;
     setFormData(prev => ({ ...prev, [name]: val }));
   };
+
+  useEffect(() => {
+    const amount = parseFloat(formData.loanAmount) || 0;
+    const previous = parseFloat(formData.previousLoan) || 0;
+    const rate = parseFloat(formData.interestRate.replace('%', '')) / 100 || 0;
+    
+    // Extract months from duration string (e.g., "3 months" -> 3)
+    const durationMatch = formData.loanDuration.match(/\d+/);
+    const duration = durationMatch ? parseInt(durationMatch[0]) : 0;
+
+    if (amount > 0 && duration > 0) {
+      const interest = amount * rate * duration;
+      const total = amount + previous + interest;
+      setFormData(prev => ({ ...prev, totalLoan: total.toFixed(2) }));
+    } else {
+      setFormData(prev => ({ ...prev, totalLoan: (amount + previous).toFixed(2) }));
+    }
+  }, [formData.loanAmount, formData.previousLoan, formData.interestRate, formData.loanDuration]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -388,14 +406,14 @@ export default function ApplyPage() {
                     </div>
                   </div>
                   <div className="space-y-2">
-                    <label className="text-[10px] font-bold text-[#5A6577] uppercase tracking-widest ml-1">Loan Duration</label>
+                    <label className="text-[10px] font-bold text-[#5A6577] uppercase tracking-widest ml-1">Loan Duration (Months)</label>
                     <input 
                       type="text" 
                       name="loanDuration" 
                       value={formData.loanDuration} 
                       onChange={handleChange}
                       className="w-full p-4 bg-[#FAFBFC] border border-[#E4E7EC] rounded-xl focus:ring-2 focus:ring-[#0F2B46] focus:bg-white outline-none transition-all font-medium text-[#1A2332]"
-                      placeholder="e.g. 3 Months"
+                      placeholder="e.g. 3"
                       required
                     />
                   </div>

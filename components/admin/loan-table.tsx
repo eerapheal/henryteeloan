@@ -1,5 +1,7 @@
 'use client';
 
+import Link from "next/link";
+
 import { 
   MoreVertical, 
   ExternalLink, 
@@ -109,9 +111,11 @@ export default function LoanTable({ loans, onUpdate }: { loans: any[], onUpdate:
                         <Banknote className="w-4 h-4" /> Mark as Paid
                       </DropdownMenuItem>
                       <div className="h-px bg-slate-50 my-1" />
-                      <DropdownMenuItem className="gap-2 p-2.5 cursor-pointer text-slate-600 font-medium">
-                        <ExternalLink className="w-4 h-4" /> View Details
-                      </DropdownMenuItem>
+                      <Link href={`/admin/loans/${loan._id}`}>
+                        <DropdownMenuItem className="gap-2 p-2.5 cursor-pointer text-slate-600 font-medium">
+                          <ExternalLink className="w-4 h-4" /> View Details
+                        </DropdownMenuItem>
+                      </Link>
                     </DropdownMenuContent>
                   </DropdownMenu>
                 </td>

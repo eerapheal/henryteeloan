@@ -5,6 +5,34 @@ import { authOptions } from "@/lib/auth";
 import { ObjectId } from "mongodb";
 import { sendLoanStatusUpdateNotification } from "@/lib/email";
 
+export async function GET(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  try {
+    const session = await getServerSession(authOptions);
+
+    if (!session || (session.user as any).role !== "admin") {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    const { id } = await params;
+    const client = await clientPromise;
+    const db = client.db("henrytee_loans");
+
+    const application = await db.collection("applications").findOne({ _id: new ObjectId(id) });
+    
+    if (!application) {
+      return NextResponse.json({ error: "Application not found" }, { status: 404 });
+    }
+
+    return NextResponse.json(application, { status: 200 });
+  } catch (error) {
+    console.error("GET Loan Error:", error);
+    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+  }
+}
+
 export async function PATCH(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
