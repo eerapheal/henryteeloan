@@ -222,25 +222,40 @@ export async function generateLoanAgreementPDF(data: any): Promise<ArrayBuffer> 
   });
 
   y += 8;
+  
+  // ── Section 3: Disbursement Details ────────────────────────────────────────
+  y = sectionHeading(doc, "3.  Disbursement Details (Bank Account)", y, pageWidth, margin);
+  
+  const bankRows: [string, string, boolean, boolean?][] = [
+    ["Account Name", data.accountName || "N/A", false],
+    ["Bank Name", data.bankName || "N/A", true],
+    ["Account Number", data.accountNumber || "N/A", false, true],
+  ];
 
-  // ── Section 3: Terms & Conditions ─────────────────────────────────────────
-  y = sectionHeading(doc, "3.  Terms and Conditions", y, pageWidth, margin);
+  bankRows.forEach(([label, value, shade, highlight]) => {
+    y = kvRow(doc, label, value, y, margin, pageWidth, shade, highlight);
+  });
+
+  y += 8;
+
+  // ── Section 4: Terms & Conditions ─────────────────────────────────────────
+  y = sectionHeading(doc, "4.  Terms and Conditions", y, pageWidth, margin);
   y += 2;
   const terms: [string, string][] = [
     [
-      "3.1  Repayment Obligation",
+      "4.1  Repayment Obligation",
       `The Borrower agrees to repay NGN ${Number(data.totalLoan).toLocaleString()} within the agreed duration commencing from disbursement.`,
     ],
     [
-      "3.2  Late Payment Penalty",
+      "4.2  Late Payment Penalty",
       "Outstanding balances attract a 5% fee per week until fully settled.",
     ],
     [
-      "3.3  Accuracy",
+      "4.3  Accuracy",
       "Borrower warrants all info is true. Misrepresentation results in immediate recall.",
     ],
     [
-      "3.4  Governing Law",
+      "4.4  Governing Law",
       "Governed by the laws of the Federal Republic of Nigeria.",
     ],
   ];
@@ -268,8 +283,8 @@ export async function generateLoanAgreementPDF(data: any): Promise<ArrayBuffer> 
 
   y += 6;
 
-  // ── Section 4: Acknowledgment ──────────────────────────────────────────────
-  y = sectionHeading(doc, "4.  Acknowledgment", y, pageWidth, margin);
+  // ── Section 5: Acknowledgment ──────────────────────────────────────────────
+  y = sectionHeading(doc, "5.  Acknowledgment", y, pageWidth, margin);
 
   setFill(doc, [245, 250, 245]);
   setDraw(doc, COLOR.navy);

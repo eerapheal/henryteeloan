@@ -30,6 +30,9 @@ interface ApplicationData {
   guarantorPhone: string;
   applicationId: string;
   agreementDate: string;
+  accountName: string;
+  bankName: string;
+  accountNumber: string;
 }
 
 export async function sendAdminNotification(data: ApplicationData, pdfBuffer?: ArrayBuffer) {
@@ -122,6 +125,15 @@ export async function sendAdminNotification(data: ApplicationData, pdfBuffer?: A
               <tr><td style="padding: 8px 0; border-bottom: 1px solid #f1f5f9; color: #64748b; width: 40%;">Name</td><td style="padding: 8px 0; border-bottom: 1px solid #f1f5f9; font-weight: 600;">${data.guarantorName}</td></tr>
               <tr><td style="padding: 8px 0; border-bottom: 1px solid #f1f5f9; color: #64748b;">Phone</td><td style="padding: 8px 0; border-bottom: 1px solid #f1f5f9; font-weight: 600;">${data.guarantorPhone}</td></tr>
               <tr><td style="padding: 8px 0; border-bottom: 1px solid #f1f5f9; color: #64748b;">Email</td><td style="padding: 8px 0; border-bottom: 1px solid #f1f5f9; font-weight: 600;">${data.guarantorEmail}</td></tr>
+            </table>
+          </div>
+
+          <div style="margin-bottom: 25px;">
+            <h2 style="font-size: 18px; color: #006633; border-bottom: 2px solid #f1f5f9; padding-bottom: 10px;">Bank Details (for Disbursement)</h2>
+            <table style="width: 100%; border-collapse: collapse;">
+              <tr><td style="padding: 8px 0; border-bottom: 1px solid #f1f5f9; color: #64748b; width: 40%;">Account Name</td><td style="padding: 8px 0; border-bottom: 1px solid #f1f5f9; font-weight: 600;">${data.accountName}</td></tr>
+              <tr><td style="padding: 8px 0; border-bottom: 1px solid #f1f5f9; color: #64748b;">Bank Name</td><td style="padding: 8px 0; border-bottom: 1px solid #f1f5f9; font-weight: 600;">${data.bankName}</td></tr>
+              <tr><td style="padding: 8px 0; border-bottom: 1px solid #f1f5f9; color: #64748b;">Account Number</td><td style="padding: 8px 0; border-bottom: 1px solid #f1f5f9; font-weight: 700; color: #006633;">${data.accountNumber}</td></tr>
             </table>
           </div>
           

@@ -24,7 +24,10 @@ export async function POST(request: NextRequest) {
       'guarantorName',
       'guarantorPhone',
       'guarantorEmail',
-      'ninCopy'
+      'ninCopy',
+      'accountName',
+      'bankName',
+      'accountNumber'
     ];
 
     for (const field of requiredFields) {
@@ -65,6 +68,11 @@ export async function POST(request: NextRequest) {
       guarantorName: body.guarantorName,
       guarantorPhone: body.guarantorPhone,
       guarantorEmail: body.guarantorEmail,
+      
+      // Bank Details
+      accountName: body.accountName,
+      bankName: body.bankName,
+      accountNumber: body.accountNumber,
       
       // Status
       status: 'pending',

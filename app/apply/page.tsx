@@ -40,6 +40,11 @@ export default function ApplyPage() {
     // Agreement
     agreeToTerms: false,
     ninCopy: null as File | null,
+    
+    // Bank Details
+    accountName: '',
+    bankName: '',
+    accountNumber: '',
   });
 
   const [loading, setLoading] = useState(false);
@@ -144,6 +149,9 @@ export default function ApplyPage() {
         guarantorEmail: '',
         agreeToTerms: false,
         ninCopy: null,
+        accountName: '',
+        bankName: '',
+        accountNumber: '',
       });
 
       setTimeout(() => setSuccess(false), 8000);
@@ -449,6 +457,56 @@ export default function ApplyPage() {
                       className="w-full p-4 bg-[#FAFBFC] border border-[#E4E7EC] rounded-xl focus:ring-2 focus:ring-[#0F2B46] focus:bg-white outline-none transition-all font-medium min-h-[100px] resize-none"
                       placeholder="Complete work/office address"
                       required
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Bank Details Section */}
+              <div className="space-y-8 pt-6">
+                <div className="flex items-center gap-3 text-[#0F2B46]">
+                  <div className="w-10 h-10 bg-[#0F2B46]/5 rounded-xl flex items-center justify-center">
+                    <ShieldCheck className="w-5 h-5 text-[#C8992C]" />
+                  </div>
+                  <h3 className="text-xl font-bold uppercase tracking-wider">Disbursement Details (Bank Account)</h3>
+                </div>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 bg-[#FAFBFC] p-5 rounded-3xl border border-[#E4E7EC]">
+                  <div className="space-y-2">
+                    <label className="text-[10px] font-bold text-[#5A6577] uppercase tracking-widest ml-1">Account Name</label>
+                    <input 
+                      type="text" 
+                      name="accountName" 
+                      value={formData.accountName} 
+                      onChange={handleChange}
+                      className="w-full p-4 bg-white border border-[#E4E7EC] rounded-xl focus:ring-2 focus:ring-[#0F2B46] outline-none font-semibold text-sm text-[#1A2332]"
+                      placeholder="Enter your bank account name"
+                      required
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-[10px] font-bold text-[#5A6577] uppercase tracking-widest ml-1">Bank Name</label>
+                    <input 
+                      type="text" 
+                      name="bankName" 
+                      value={formData.bankName} 
+                      onChange={handleChange}
+                      className="w-full p-4 bg-white border border-[#E4E7EC] rounded-xl focus:ring-2 focus:ring-[#0F2B46] outline-none font-semibold text-sm text-[#1A2332]"
+                      placeholder="e.g. Zenith Bank, Access Bank"
+                      required
+                    />
+                  </div>
+                  <div className="md:col-span-2 space-y-2">
+                    <label className="text-[10px] font-bold text-[#5A6577] uppercase tracking-widest ml-1">Account Number</label>
+                    <input 
+                      type="text" 
+                      name="accountNumber" 
+                      value={formData.accountNumber} 
+                      onChange={handleChange}
+                      className="w-full p-4 bg-white border border-[#E4E7EC] rounded-xl focus:ring-2 focus:ring-[#0F2B46] outline-none font-semibold text-sm text-[#1A2332]"
+                      placeholder="10-digit account number"
+                      required
+                      maxLength={10}
                     />
                   </div>
                 </div>
