@@ -278,7 +278,7 @@ export async function generateLoanAgreementPDF(data: any): Promise<ArrayBuffer> 
     setTextColor(doc, COLOR.charcoal);
     const lines = doc.splitTextToSize(body, pageWidth - margin * 2 - 6);
     doc.text(lines, margin + 3, y);
-    y += 4; // Next row spacing
+    y += 2; // Next row spacing
   });
 
   y += 6;

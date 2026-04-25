@@ -103,9 +103,9 @@ export async function POST(request: NextRequest) {
       // Send guarantor notification
       await sendGuarantorNotification(emailData as any);
       
-      console.log('[v0] Emails sent successfully for application:', applicationId);
+      console.log('[Henrytee Loans] Emails sent successfully for application:', applicationId);
     } catch (emailError) {
-      console.error('[v0] Email sending failed:', emailError);
+      console.error('[Henrytee Loans] Email sending failed:', emailError);
     }
 
     return NextResponse.json(
