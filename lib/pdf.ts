@@ -272,13 +272,13 @@ export async function generateLoanAgreementPDF(data: any): Promise<ArrayBuffer> 
     setTextColor(doc, COLOR.navy);
     doc.text(heading, margin + 3, y + 4);
 
-      y += 8; // Spacing between heading and body
+      y += 4; // Spacing between heading and body
 
     doc.setFont("helvetica", "normal");
     setTextColor(doc, COLOR.charcoal);
     const lines = doc.splitTextToSize(body, pageWidth - margin * 2 - 6);
     doc.text(lines, margin + 3, y);
-    y += 10; // Next row spacing
+    y += 4; // Next row spacing
   });
 
   y += 6;
