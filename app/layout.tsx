@@ -6,9 +6,44 @@ import './globals.css'
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: 'Henrytee Loans | Trusted Personal & Business Funding',
-  description: 'Fast, reliable, and professional personal and business loans from Henrytee Loans.',
+  metadataBase: new URL('https://henryteeloan.vercel.app'),
+  title: {
+    default: 'Henrytee Loans | Trusted Personal & Business Funding in Nigeria',
+    template: '%s | Henrytee Loans'
+  },
+  description: 'Fast, reliable, and professional personal and business loans from Henrytee Loans. Get funded in 24 hours with flexible repayment terms.',
   generator: 'Henrytee Loans',
+  keywords: ['loans nigeria', 'personal loans', 'business loans', 'salary advance', 'fast funding', 'Henrytee Loans'],
+  authors: [{ name: 'Henrytee Loans' }],
+  creator: 'Henrytee Loans',
+  publisher: 'Henrytee Loans',
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  openGraph: {
+    type: 'website',
+    locale: 'en_NG',
+    url: 'https://henryteeloan.vercel.app',
+    siteName: 'Henrytee Loans',
+    title: 'Henrytee Loans | Trusted Personal & Business Funding in Nigeria',
+    description: 'Fast, reliable, and professional personal and business loans from Henrytee Loans.',
+    images: [
+      {
+        url: '/henrytee.png',
+        width: 1200,
+        height: 630,
+        alt: 'Henrytee Loans Branding',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Henrytee Loans | Trusted Personal & Business Funding in Nigeria',
+    description: 'Fast, reliable, and professional personal and business loans from Henrytee Loans.',
+    images: ['/henrytee.png'],
+  },
   icons: {
     icon: '/icon.png',
     apple: '/apple-icon.png',
