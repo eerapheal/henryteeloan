@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import clientPromise from "@/lib/mongodb";
-import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/lib/auth";
+import { auth } from "@/auth";
 import { ObjectId } from "mongodb";
 
 export async function PATCH(
@@ -9,7 +8,7 @@ export async function PATCH(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const session = await getServerSession(authOptions);
+    const session = await auth();
 
     if (!session || (session.user as any).role !== "admin") {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -48,7 +47,7 @@ export async function DELETE(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const session = await getServerSession(authOptions);
+    const session = await auth();
 
     if (!session || (session.user as any).role !== "admin") {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });

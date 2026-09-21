@@ -1,76 +1,12 @@
-import { NextAuthOptions } from "next-auth";
-import CredentialsProvider from "next-auth/providers/credentials";
-import clientPromise from "@/lib/mongodb";
-import bcrypt from "bcryptjs";
+// Re-export auth utilities from the root auth.ts for backward compatibility.
+// In Auth.js v5, the central config lives at the project root.
+export { auth, signIn, signOut } from "@/auth";
 
-export const authOptions: NextAuthOptions = {
-  providers: [
-    CredentialsProvider({
-      name: "Credentials",
-      credentials: {
-        email: { label: "Email", type: "email" },
-        password: { label: "Password", type: "password" },
-      },
-      async authorize(credentials) {
-        if (!credentials?.email || !credentials?.password) return null;
+// Provide a compatible getServerSession shim for server components/API routes.
+// Usage: const session = await getServerSession();
+import { auth } from "@/auth";
+export const getServerSession = auth;
 
-        const adminEmail = process.env.ADMIN_EMAIL || "santech901@gmail.com";
-        const adminPassword = process.env.ADMIN_PASSWORD || "admin123";
-
-        // 1. Check for Hardcoded Admin
-        if (
-          credentials.email === adminEmail &&
-          credentials.password === adminPassword
-        ) {
-          return {
-            id: "admin-1",
-            name: "Admin User",
-            email: adminEmail,
-            role: "admin",
-          };
-        }
-
-        // 2. Check Database Users
-        try {
-          const client = await clientPromise;
-          const db = client.db("henrytee_loans");
-          const user = await db.collection("users").findOne({ email: credentials.email });
-
-          if (user && await bcrypt.compare(credentials.password, user.password)) {
-            return {
-              id: user._id.toString(),
-              name: user.username,
-              email: user.email,
-              role: user.role || "user",
-            };
-          }
-        } catch (error) {
-          console.error("Auth error:", error);
-        }
-
-        return null;
-      },
-    }),
-  ],
-  callbacks: {
-    async jwt({ token, user }) {
-      if (user) {
-        token.role = (user as any).role;
-      }
-      return token;
-    },
-    async session({ session, token }) {
-      if (session.user) {
-        (session.user as any).role = token.role;
-      }
-      return session;
-    },
-  },
-  pages: {
-    signIn: "/auth/signin",
-  },
-  session: {
-    strategy: "jwt",
-  },
-  secret: process.env.NEXTAUTH_SECRET,
-};
+// authOptions is no longer needed in v5 — kept as a no-op export to avoid
+// import errors while you migrate call-sites.
+export const authOptions = {};
