@@ -16,14 +16,13 @@ export default function Header() {
       <header className="border-b border-[#E4E7EC] bg-white/80 backdrop-blur-xl sticky top-0 z-50 transition-all duration-300 shadow-[0_1px_3px_rgba(0,0,0,0.04)]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
-            <Link href="/" className="flex items-center group shrink-0">
+            <Link href="/" className="flex items-center group shrink-0" aria-label="Henrytee Loans Home">
               <Image 
                 src="/henrytee.png" 
                 alt="Henrytee Loans" 
-                width={280} 
-                height={60} 
-                className="h-14 w-auto transition-transform duration-300 group-hover:scale-105"
-                style={{ width: 'auto', height: 'auto' }}
+                width={64} 
+                height={64} 
+                className="h-12 w-12 sm:h-14 sm:w-14 object-contain transition-transform duration-300 group-hover:scale-105"
                 priority
               />
             </Link>

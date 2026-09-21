@@ -62,14 +62,13 @@ export default function AdminSidebar({
         isOpen ? "translate-x-0" : "-translate-x-full"
       )}>
         <div className="p-8 border-b border-slate-100 flex items-center justify-between">
-          <Link href="/admin" className="flex items-center" onClick={onClose}>
+          <Link href="/admin" className="flex items-center" onClick={onClose} aria-label="Henrytee Admin Home">
             <Image 
               src="/henrytee.png" 
               alt="Henrytee Admin" 
-              width={160} 
-              height={50} 
-              className="h-10 w-auto object-contain"
-              style={{ width: 'auto', height: 'auto' }}
+              width={48} 
+              height={48} 
+              className="h-10 w-10 object-contain"
             />
           </Link>
           <button 
