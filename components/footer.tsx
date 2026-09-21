@@ -17,6 +17,7 @@ export default function Footer() {
                 width={160} 
                 height={50} 
                 className="h-10 w-auto object-contain transition-transform duration-300 group-hover:scale-105 brightness-0 invert"
+                style={{ width: 'auto', height: 'auto' }}
               />
             </Link>
             <p className="text-sm text-slate-400 mb-6 leading-relaxed">

@@ -8,23 +8,14 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
 
-    // Validate required fields for the new Loan Agreement form
+    // Validate required fields
     const requiredFields = [
-      'borrowerName',
       'loanAmount',
-      'totalLoan',
       'fullName',
       'phone',
       'email',
       'nin',
       'loanDuration',
-      'placeOfWork',
-      'homeAddress',
-      'officeAddress',
-      'guarantorName',
-      'guarantorPhone',
-      'guarantorEmail',
-      'ninCopy',
       'accountName',
       'bankName',
       'accountNumber'
@@ -33,7 +24,7 @@ export async function POST(request: NextRequest) {
     for (const field of requiredFields) {
       if (!body[field] && body[field] !== 0) {
         return NextResponse.json(
-          { error: `Missing required field: ${field}` },
+          { error: `Please provide your ${field.replace(/([A-Z])/g, ' $1').toLowerCase()}` },
           { status: 400 }
         );
       }
@@ -44,30 +35,44 @@ export async function POST(request: NextRequest) {
     const db = client.db('henrytee_loans');
     const applicationsCollection = db.collection('applications');
 
+    // Compute agreement date safely
+    const now = new Date();
+    const day = body.agreementDay || now.getDate().toString();
+    const month = body.agreementMonth || now.toLocaleString('en-US', { month: 'long' });
+    const year = body.agreementYear 
+      ? (body.agreementYear.length === 2 ? `20${body.agreementYear}` : body.agreementYear) 
+      : now.getFullYear().toString();
+    const agreementDate = body.agreementDate || `${day} ${month} ${year}`;
+
+    const loanAmount = parseFloat(body.loanAmount) || 0;
+    const previousLoan = parseFloat(body.previousLoan || '0') || 0;
+    const totalLoan = parseFloat(body.totalLoan) || (loanAmount + previousLoan);
+    const settings = await getSettings();
+
     // Create application document
     const application = {
-      agreementDate: `${body.agreementDay} ${body.agreementMonth} 20${body.agreementYear}`,
-      borrowerName: body.borrowerName,
-      loanAmount: parseFloat(body.loanAmount),
-      previousLoan: parseFloat(body.previousLoan || '0'),
-      totalLoan: parseFloat(body.totalLoan),
-      interestRate: body.interestRate || `${(await getSettings()).interestRate}%`,
+      agreementDate,
+      borrowerName: body.borrowerName || body.fullName || 'Applicant',
+      loanAmount,
+      previousLoan,
+      totalLoan,
+      interestRate: body.interestRate || `${settings.interestRate}%`,
       
       // Personal Details
       fullName: body.fullName,
       phone: body.phone,
       email: body.email,
       nin: body.nin,
-      ninCopy: body.ninCopy, // Store base64 or reference
+      ninCopy: body.ninCopy || '',
       loanDuration: body.loanDuration,
-      placeOfWork: body.placeOfWork,
-      homeAddress: body.homeAddress,
-      officeAddress: body.officeAddress,
+      placeOfWork: body.placeOfWork || '',
+      homeAddress: body.homeAddress || '',
+      officeAddress: body.officeAddress || '',
       
       // Guarantor Details
-      guarantorName: body.guarantorName,
-      guarantorPhone: body.guarantorPhone,
-      guarantorEmail: body.guarantorEmail,
+      guarantorName: body.guarantorName || '',
+      guarantorPhone: body.guarantorPhone || '',
+      guarantorEmail: body.guarantorEmail || '',
       
       // Bank Details
       accountName: body.accountName,
@@ -84,29 +89,27 @@ export async function POST(request: NextRequest) {
     const result = await applicationsCollection.insertOne(application);
     const applicationId = result.insertedId.toString();
 
-    // Send emails to admin and applicant
-    try {
-      const emailData = {
-        ...application,
-        applicationId,
-      };
+    // Dispatch emails in background so applicant gets immediate response
+    (async () => {
+      try {
+        const emailData = {
+          ...application,
+          applicationId,
+        };
 
-      // Generate Loan Agreement PDF
-      const pdfBuffer = await generateLoanAgreementPDF(emailData);
+        const pdfBuffer = await generateLoanAgreementPDF(emailData);
 
-      // Send admin notification
-      await sendAdminNotification(emailData as any, pdfBuffer);
-      
-      // Send applicant confirmation with PDF
-      await sendApplicantConfirmation(emailData as any, pdfBuffer);
-
-      // Send guarantor notification
-      await sendGuarantorNotification(emailData as any);
-      
-      console.log('[Henrytee Loans] Emails sent successfully for application:', applicationId);
-    } catch (emailError) {
-      console.error('[Henrytee Loans] Email sending failed:', emailError);
-    }
+        await Promise.allSettled([
+          sendAdminNotification(emailData as any, pdfBuffer),
+          sendApplicantConfirmation(emailData as any, pdfBuffer),
+          sendGuarantorNotification(emailData as any),
+        ]);
+        
+        console.log('[Henrytee Loans] Emails dispatched for application:', applicationId);
+      } catch (emailError) {
+        console.error('[Henrytee Loans] Email notification failed:', emailError);
+      }
+    })();
 
     return NextResponse.json(
       {
@@ -116,10 +119,10 @@ export async function POST(request: NextRequest) {
       },
       { status: 201 }
     );
-  } catch (error) {
-    console.error('API Error:', error);
+  } catch (error: any) {
+    console.error('POST /api/applications Error:', error);
     return NextResponse.json(
-      { error: 'Failed to submit application' },
+      { error: error?.message || 'Failed to submit application' },
       { status: 500 }
     );
   }
@@ -133,13 +136,14 @@ export async function GET() {
 
     const applications = await applicationsCollection
       .find({})
+      .project({ ninCopy: 0 })
       .sort({ submittedAt: -1 })
       .limit(10)
       .toArray();
 
     return NextResponse.json(applications, { status: 200 });
-  } catch (error) {
-    console.error('API Error:', error);
+  } catch (error: any) {
+    console.error('GET /api/applications Error:', error);
     return NextResponse.json(
       { error: 'Failed to fetch applications' },
       { status: 500 }

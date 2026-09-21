@@ -303,13 +303,6 @@ export default function SettingsView() {
                     className="h-12 bg-[#FAFBFC] border-[#E4E7EC] rounded-xl" 
                   />
                 </div>
-                {profile.isHardcoded && (
-                  <div className="p-4 bg-amber-50 border border-amber-100 rounded-xl">
-                    <p className="text-xs text-amber-700 leading-relaxed font-medium">
-                      Note: You are logged in as a hardcoded administrator. Profile changes may not persist until you create a database-managed admin account.
-                    </p>
-                  </div>
-                )}
                 <Button type="submit" className="w-full h-12 rounded-xl bg-[#0F2B46] hover:bg-[#0A1E33]" disabled={profileLoading}>
                   {profileLoading ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <Save className="w-4 h-4 mr-2" />}
                   Save Profile Changes

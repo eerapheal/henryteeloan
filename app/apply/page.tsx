@@ -75,6 +75,51 @@ export default function ApplyPage() {
     }
   }, [formData.loanAmount, formData.previousLoan, formData.interestRate, formData.loanDuration]);
 
+  const compressFile = async (file: File): Promise<string> => {
+    return new Promise((resolve) => {
+      if (file.type === 'application/pdf') {
+        const reader = new FileReader();
+        reader.onloadend = () => resolve(reader.result as string);
+        reader.readAsDataURL(file);
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const img = new Image();
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          const MAX_WIDTH = 1200;
+          const MAX_HEIGHT = 1200;
+          let width = img.width;
+          let height = img.height;
+
+          if (width > height) {
+            if (width > MAX_WIDTH) {
+              height *= MAX_WIDTH / width;
+              width = MAX_WIDTH;
+            }
+          } else {
+            if (height > MAX_HEIGHT) {
+              width *= MAX_HEIGHT / height;
+              height = MAX_HEIGHT;
+            }
+          }
+
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          ctx?.drawImage(img, 0, 0, width, height);
+          resolve(canvas.toDataURL('image/jpeg', 0.8));
+        };
+        img.onerror = () => resolve(e.target?.result as string || '');
+        img.src = e.target?.result as string;
+      };
+      reader.onerror = () => resolve('');
+      reader.readAsDataURL(file);
+    });
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.agreeToTerms) {
@@ -96,24 +141,20 @@ export default function ApplyPage() {
     setSuccess(false);
 
     try {
-      // Convert file to base64 for the API
-      let ninCopyBase64 = '';
-      if (formData.ninCopy) {
-        ninCopyBase64 = await new Promise<string>((resolve) => {
-          const reader = new FileReader();
-          reader.onloadend = () => resolve(reader.result as string);
-          reader.readAsDataURL(formData.ninCopy as File);
-        });
-      }
+      // Compress and convert file to base64 for fast and lightweight submission
+      const ninCopyBase64 = await compressFile(formData.ninCopy);
+
+      const payload = {
+        ...formData,
+        borrowerName: formData.borrowerName || formData.fullName,
+        ninCopy: ninCopyBase64,
+        loanType: 'personal-loan',
+      };
 
       const response = await fetch('/api/applications', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          ...formData,
-          ninCopy: ninCopyBase64,
-          loanType: 'personal-loan',
-        }),
+        body: JSON.stringify(payload),
       });
 
       if (!response.ok) {

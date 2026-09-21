@@ -7,7 +7,8 @@ import {
   Trash2, 
   UserPlus, 
   UserMinus,
-  Mail
+  Mail,
+  CheckCircle
 } from "lucide-react";
 import {
   DropdownMenu,

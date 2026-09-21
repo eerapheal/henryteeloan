@@ -17,37 +17,64 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         const adminEmail = process.env.ADMIN_EMAIL || "santech901@gmail.com";
         const adminPassword = process.env.ADMIN_PASSWORD || "admin123";
 
-        // 1. Check for Hardcoded Admin
-        if (
-          credentials.email === adminEmail &&
-          credentials.password === adminPassword
-        ) {
-          return {
-            id: "admin-1",
-            name: "Admin User",
-            email: adminEmail,
-            role: "admin",
-          };
-        }
-
-        // 2. Check Database Users
         try {
           const client = await clientPromise;
           const db = client.db("henrytee_loans");
-          const user = await db
-            .collection("users")
-            .findOne({ email: credentials.email });
+          const usersCollection = db.collection("users");
 
-          if (user && (await bcrypt.compare(credentials.password as string, user.password))) {
-            return {
-              id: user._id.toString(),
-              name: user.username,
-              email: user.email,
-              role: user.role || "user",
-            };
+          // 1. Check Database Users first
+          const user = await usersCollection.findOne({ email: credentials.email });
+
+          if (user && user.password) {
+            const isValidPassword = await bcrypt.compare(credentials.password as string, user.password);
+            if (isValidPassword) {
+              return {
+                id: user._id.toString(),
+                name: user.username || "Admin",
+                email: user.email,
+                role: user.role || "user",
+              };
+            }
+          }
+
+          // 2. Check for Default / Initial Admin credentials
+          if (
+            credentials.email === adminEmail &&
+            credentials.password === adminPassword
+          ) {
+            // Auto-provision or update database-managed admin account
+            const hashedPassword = await bcrypt.hash(adminPassword, 10);
+            
+            if (user) {
+              await usersCollection.updateOne(
+                { _id: user._id },
+                { $set: { role: "admin", password: hashedPassword, updatedAt: new Date() } }
+              );
+              return {
+                id: user._id.toString(),
+                name: user.username || "Ekpenisi Henry Happiness",
+                email: user.email,
+                role: "admin",
+              };
+            } else {
+              const result = await usersCollection.insertOne({
+                username: "Ekpenisi Henry Happiness",
+                email: adminEmail,
+                password: hashedPassword,
+                role: "admin",
+                createdAt: new Date(),
+                updatedAt: new Date(),
+              });
+              return {
+                id: result.insertedId.toString(),
+                name: "Ekpenisi Henry Happiness",
+                email: adminEmail,
+                role: "admin",
+              };
+            }
           }
         } catch (error) {
-          console.error("Auth error:", error);
+          console.error("Auth authorization error:", error);
         }
 
         return null;

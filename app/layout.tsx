@@ -63,8 +63,8 @@ export default async function RootLayout({
   const settings = await getSettings();
 
   return (
-    <html lang="en">
-      <body className={`${inter.className} min-h-screen flex flex-col antialiased bg-background`}>
+    <html lang="en" suppressHydrationWarning>
+      <body className={`${inter.className} min-h-screen flex flex-col antialiased bg-background`} suppressHydrationWarning>
         <SettingsProvider settings={settings}>
           <AuthProvider>
             {children}

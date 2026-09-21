@@ -63,6 +63,7 @@ export default function SignUp() {
                   width={180} 
                   height={40} 
                   className="h-10 w-auto brightness-0 invert"
+                  style={{ width: 'auto', height: 'auto' }}
                 />
               </Link>
               <h2 className="text-3xl md:text-4xl font-bold mb-6 leading-tight">Create <span className="text-gradient-gold">Account</span></h2>

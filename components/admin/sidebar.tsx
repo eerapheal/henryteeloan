@@ -69,6 +69,7 @@ export default function AdminSidebar({
               width={160} 
               height={50} 
               className="h-10 w-auto object-contain"
+              style={{ width: 'auto', height: 'auto' }}
             />
           </Link>
           <button 

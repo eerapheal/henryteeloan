@@ -19,7 +19,11 @@ export async function GET(
     const client = await clientPromise;
     const db = client.db("henrytee_loans");
 
-    const application = await db.collection("applications").findOne({ _id: new ObjectId(id) });
+    const query = ObjectId.isValid(id)
+      ? { $or: [{ _id: new ObjectId(id) }, { _id: id as any }, { applicationId: id }] }
+      : { $or: [{ _id: id as any }, { applicationId: id }] };
+
+    const application = await db.collection("applications").findOne(query);
     
     if (!application) {
       return NextResponse.json({ error: "Application not found" }, { status: 404 });
@@ -53,15 +57,19 @@ export async function PATCH(
     const client = await clientPromise;
     const db = client.db("henrytee_loans");
 
+    const query = ObjectId.isValid(id)
+      ? { $or: [{ _id: new ObjectId(id) }, { _id: id as any }, { applicationId: id }] }
+      : { $or: [{ _id: id as any }, { applicationId: id }] };
+
     // Get application details first for email notification
-    const application = await db.collection("applications").findOne({ _id: new ObjectId(id) });
+    const application = await db.collection("applications").findOne(query);
     
     if (!application) {
       return NextResponse.json({ error: "Application not found" }, { status: 404 });
     }
 
     const result = await db.collection("applications").updateOne(
-      { _id: new ObjectId(id) },
+      query,
       { 
         $set: { 
           status, 
